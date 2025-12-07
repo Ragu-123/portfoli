@@ -1,0 +1,481 @@
+import React, { useState, useEffect, useRef } from 'react';
+import { VoxelScene } from './components/3d/VoxelScene';
+import { Layout } from './components/Layout';
+import { BlockButton, BlockCard, BlockInput, BlockTextArea, BlockModal, BlockProgressBar } from './components/ui/BlockComponents';
+import { PROJECTS, SKILL_CATEGORIES, ABOUT_INFO } from './constants';
+import { ArrowRight, Github, ExternalLink, User, Mail, Brain, Database, Cpu, Terminal, Sparkles, Activity, Linkedin, FileText } from 'lucide-react';
+import { Project } from './types';
+
+// Page Transition Wrapper with Full Width
+const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
+  <div className="animate-in slide-in-from-bottom-8 fade-in duration-500 w-full px-6 md:px-12 lg:px-24 min-h-[70vh] flex flex-col justify-center max-w-[1920px] mx-auto">
+    {children}
+  </div>
+);
+
+// AI Terminal Component
+const TerminalBlock = () => {
+  const [text, setText] = useState('');
+  const [cursorVisible, setCursorVisible] = useState(true);
+  
+  const codeSnippet = `import torch
+import torch.nn as nn
+
+class RagunathNet(nn.Module):
+    def __init__(self):
+        super(RagunathNet, self).__init__()
+        self.vision = VisionTransformer(patch_size=16)
+        self.nlp = Llama3(params="8b")
+        self.skills = ["Deep Learning", "RAG", "CV"]
+
+    def forward(self, problem):
+        # Processing input...
+        insight = self.vision(problem)
+        solution = self.nlp(insight)
+        return solution
+
+# Initializing AI Engineer...
+model = RagunathNet()
+model.eval()
+print("Ready to innovate.")`;
+
+  useEffect(() => {
+    let index = 0;
+    const timer = setInterval(() => {
+      setText(codeSnippet.substring(0, index));
+      index++;
+      if (index > codeSnippet.length) {
+        clearInterval(timer);
+      }
+    }, 30); // Typing speed
+    
+    return () => clearInterval(timer);
+  }, []);
+
+  useEffect(() => {
+    const cursorTimer = setInterval(() => setCursorVisible(v => !v), 500);
+    return () => clearInterval(cursorTimer);
+  }, []);
+
+  return (
+    <div className="bg-[#1e1e1e] border-2 border-gray-600 rounded-md p-4 shadow-xl font-mono text-xs md:text-sm text-left h-64 md:h-80 overflow-hidden relative opacity-90 backdrop-blur-sm">
+       <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
+         <div className="w-3 h-3 rounded-full bg-red-500"></div>
+         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+         <div className="w-3 h-3 rounded-full bg-green-500"></div>
+         <span className="text-gray-400 ml-2">ai_core.py</span>
+       </div>
+       <pre className="text-blue-300">
+         <code dangerouslySetInnerHTML={{ 
+           __html: text.replace(/\n/g, '<br/>')
+                       .replace(/class/g, '<span class="text-purple-400">class</span>')
+                       .replace(/def/g, '<span class="text-purple-400">def</span>')
+                       .replace(/import/g, '<span class="text-purple-400">import</span>')
+                       .replace(/self/g, '<span class="text-orange-300">self</span>')
+                       .replace(/return/g, '<span class="text-purple-400">return</span>')
+         }} />
+         {cursorVisible && <span className="inline-block w-2 h-4 bg-white ml-1 align-middle"></span>}
+       </pre>
+       <div className="absolute bottom-2 right-2 text-green-500 text-xs animate-pulse">
+          ● SYSTEM ONLINE
+       </div>
+    </div>
+  );
+};
+
+const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavigate }) => {
+  return (
+    <div className="flex flex-col lg:flex-row items-center justify-center min-h-[85vh] gap-12 w-full px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto">
+       {/* Left: Content */}
+       <div className="flex-1 text-center lg:text-left z-10">
+           <div className="inline-flex items-center gap-2 px-3 py-1 bg-voxel-accent/10 border border-voxel-accent text-voxel-accent font-bold text-xs mb-6 rounded-full animate-pulse">
+             <div className="w-2 h-2 bg-voxel-accent rounded-full"></div>
+             AI ENGINEERING • MACHINE LEARNING
+           </div>
+           
+           <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tighter text-white drop-shadow-lg">
+              RAGUNATH <span className="text-voxel-primary">R</span>
+           </h1>
+           
+           <p className="text-voxel-primary font-mono text-xl md:text-2xl mb-6 font-bold flex items-center justify-center lg:justify-start gap-3">
+             <Terminal className="w-6 h-6" /> Machine Learning • NLP • CV
+           </p>
+           
+           <p className="text-gray-300 text-base md:text-lg mb-10 font-mono leading-relaxed max-w-2xl">
+              Aspiring AI Engineer and a recent graduate with a strong passion for artificial intelligence. 
+              Eager to contribute to industrial applications of AI and explore innovative solutions in NLP and CV.
+           </p>
+           
+           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+              <BlockButton size="lg" onClick={() => onNavigate('projects')}>
+                View Projects
+              </BlockButton>
+              <BlockButton size="lg" variant="secondary" onClick={() => onNavigate('contact')}>
+                Get in Touch
+              </BlockButton>
+              <BlockButton size="lg" variant="accent" href="logbook.html">
+                Logbook <ExternalLink className="w-4 h-4 ml-2" />
+              </BlockButton>
+           </div>
+
+           <div className="mt-12 flex gap-8 justify-center lg:justify-start text-gray-400 font-mono text-xs">
+              <div className="flex items-center gap-2">
+                 <Brain className="w-4 h-4 text-voxel-primary" /> Neural Networks
+              </div>
+              <div className="flex items-center gap-2">
+                 <Database className="w-4 h-4 text-voxel-secondary" /> Data Processing
+              </div>
+              <div className="flex items-center gap-2">
+                 <Cpu className="w-4 h-4 text-voxel-accent" /> Model Optimization
+              </div>
+           </div>
+       </div>
+       
+       {/* Right: Terminal Animation */}
+       <div className="flex-1 w-full max-w-xl lg:max-w-2xl transform hover:scale-[1.02] transition-transform duration-500 perspective-1000">
+           <div className="transform rotate-y-[-5deg] rotate-x-[5deg]">
+              <TerminalBlock />
+           </div>
+       </div>
+    </div>
+  );
+};
+
+const AboutSection: React.FC = () => {
+    return (
+        <PageWrapper>
+            <div className="mb-8 border-b-4 border-voxel-card pb-6 flex items-center gap-4">
+                <User className="w-10 h-10 text-voxel-primary" />
+                <div>
+                    <h2 className="text-4xl font-bold text-white">ABOUT ME</h2>
+                    <p className="text-gray-400 font-mono">AI Engineering Student & Research Enthusiast</p>
+                </div>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8 pb-10">
+                <div className="space-y-8">
+                    {/* Education */}
+                    <BlockCard title="EDUCATION_HISTORY">
+                        <div className="space-y-8">
+                            {ABOUT_INFO.education.map((edu, idx) => (
+                                <div key={idx} className="relative pl-6 border-l-2 border-dashed border-gray-700">
+                                    <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black"></div>
+                                    <h4 className="text-lg font-bold text-white leading-tight">{edu.title}</h4>
+                                    <p className="text-voxel-primary font-bold text-sm mt-1">{edu.institution}</p>
+                                    <p className="text-gray-400 text-xs mt-2 font-mono bg-black/30 inline-block px-2 py-1 border border-gray-800">{edu.details}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </BlockCard>
+
+                     {/* Research */}
+                    <BlockCard title="RESEARCH_VECTORS">
+                        <p className="text-gray-300 leading-relaxed text-sm mb-4">
+                            My work focuses on the intersection of <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">NLP</span> and <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">Computer Vision</span>.
+                        </p>
+                        <div className="grid grid-cols-2 gap-4">
+                           <div className="bg-voxel-dark p-3 border border-gray-700">
+                              <Sparkles className="w-5 h-5 text-yellow-400 mb-2" />
+                              <h5 className="font-bold text-xs text-white">Multimodal AI</h5>
+                              <p className="text-[10px] text-gray-500">Text + Image Fusion</p>
+                           </div>
+                           <div className="bg-voxel-dark p-3 border border-gray-700">
+                              <Database className="w-5 h-5 text-blue-400 mb-2" />
+                              <h5 className="font-bold text-xs text-white">RAG Systems</h5>
+                              <p className="text-[10px] text-gray-500">Knowledge Retrieval</p>
+                           </div>
+                        </div>
+                    </BlockCard>
+                </div>
+
+                <div className="space-y-8">
+                    {/* Experience */}
+                    <BlockCard title="EXPERIENCE_LOGS">
+                         <div className="space-y-6">
+                            {ABOUT_INFO.experience.map((exp, idx) => (
+                                <div key={idx} className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-colors group">
+                                    <h4 className="text-lg font-bold text-white group-hover:text-voxel-secondary transition-colors">{exp.title}</h4>
+                                    <p className="text-gray-400 text-sm mt-2 leading-relaxed font-mono">{exp.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </BlockCard>
+
+                    {/* Certifications */}
+                    <BlockCard title="CERTIFICATION_KEYS">
+                        <ul className="space-y-2">
+                            {ABOUT_INFO.certifications.map((cert, idx) => (
+                                <li key={idx} className="flex items-center gap-3 text-gray-300 text-sm p-2 hover:bg-white/5 transition-colors">
+                                    <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45"></div>
+                                    {cert}
+                                </li>
+                            ))}
+                        </ul>
+                    </BlockCard>
+                </div>
+            </div>
+        </PageWrapper>
+    );
+};
+
+const ProjectsSection: React.FC = () => {
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+
+  return (
+    <PageWrapper>
+      <div className="flex items-end justify-between mb-8 border-b-4 border-voxel-card pb-6">
+          <div>
+             <h2 className="text-4xl font-bold mb-2">PROJECTS</h2>
+             <p className="text-gray-400 font-mono">Deployed AI Models & Systems</p>
+          </div>
+          <div className="hidden md:block">
+             <BlockButton size="sm" variant="secondary" href="https://github.com/Ragu-123" target="_blank">
+               <Github className="w-4 h-4 mr-2" /> View GitHub Profile
+             </BlockButton>
+          </div>
+      </div>
+        
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+          {PROJECTS.map((project) => (
+            <BlockCard 
+                key={project.id} 
+                title={project.id.toUpperCase()} 
+                className="group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full cursor-pointer hover:shadow-voxel-xl hover:border-voxel-primary"
+                onClick={() => setSelectedProject(project)}
+            >
+              <div className="flex-grow">
+                  <div className="flex items-center justify-between mb-3">
+                     <h3 className="text-lg font-bold text-white group-hover:text-voxel-primary transition-colors">{project.title}</h3>
+                     <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent" />
+                  </div>
+                  
+                  <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded">
+                     <p className="text-gray-400 font-mono text-xs leading-relaxed line-clamp-3">
+                       {project.description}
+                     </p>
+                  </div>
+                  
+                  <div className="flex flex-wrap gap-2 mb-6">
+                    {project.tags.slice(0, 3).map(tag => (
+                      <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase">
+                        {tag}
+                      </span>
+                    ))}
+                    {project.tags.length > 3 && (
+                        <span className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-gray-500">
+                        +{project.tags.length - 3}
+                      </span>
+                    )}
+                  </div>
+              </div>
+              
+              <div className="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center">
+                  <span className="text-xs font-bold text-voxel-accent font-mono animate-pulse">● STATUS: ACTIVE</span>
+                  <div className="bg-voxel-primary text-black p-1 rounded-sm">
+                     <ArrowRight className="w-4 h-4" />
+                  </div>
+              </div>
+            </BlockCard>
+          ))}
+      </div>
+
+      {/* Project Detail Modal */}
+      <BlockModal 
+        isOpen={!!selectedProject} 
+        onClose={() => setSelectedProject(null)}
+        title={selectedProject?.title}
+      >
+        {selectedProject && (
+            <div className="space-y-6">
+                <div className="flex gap-4 mb-4">
+                     <span className="bg-voxel-primary text-voxel-dark px-2 py-1 text-xs font-bold border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        MODEL: {selectedProject.tags[0]}
+                     </span>
+                     <span className="bg-voxel-secondary text-voxel-dark px-2 py-1 text-xs font-bold border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
+                        STATUS: DEPLOYED
+                     </span>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                    <div className="md:col-span-2">
+                        <h4 className="text-voxel-primary font-bold mb-2 uppercase text-sm border-b border-gray-800 pb-1">System Architecture</h4>
+                        <p className="text-gray-300 leading-relaxed font-mono text-sm md:text-base">
+                            {selectedProject.fullDescription || selectedProject.description}
+                        </p>
+                    </div>
+                    <div className="bg-voxel-dark p-4 border border-gray-700 h-fit">
+                         <h4 className="text-voxel-accent font-bold mb-4 uppercase text-sm">Tech Stack</h4>
+                         <div className="flex flex-wrap gap-2">
+                            {selectedProject.techStack?.map(tech => (
+                                <span key={tech} className="block w-full text-center px-3 py-1 bg-[#1a1b26] border border-gray-600 text-gray-300 text-xs font-bold">
+                                    {tech}
+                                </span>
+                            )) || <span className="text-gray-500 text-xs">N/A</span>}
+                        </div>
+                    </div>
+                </div>
+
+                <div className="pt-6 border-t border-gray-700 flex flex-wrap gap-4 justify-end">
+                    {selectedProject.links.map(link => (
+                        <BlockButton key={link.label} size="sm" variant="primary" href={link.url} target="_blank">
+                            {link.label} <ExternalLink className="w-3 h-3 ml-2" />
+                        </BlockButton>
+                    ))}
+                </div>
+            </div>
+        )}
+      </BlockModal>
+    </PageWrapper>
+  );
+};
+
+const SkillsSection: React.FC = () => {
+  return (
+    <PageWrapper>
+      <div className="text-center mb-10">
+         <h2 className="text-4xl font-bold mb-4">TECHNICAL CAPABILITIES</h2>
+         <div className="w-32 h-2 bg-voxel-primary mx-auto mb-4"></div>
+         <p className="text-gray-400 font-mono">Model Confidence & Proficiency</p>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+         {SKILL_CATEGORIES.map((category, idx) => (
+             <BlockCard key={idx} className="hover:scale-[1.01] transition-transform duration-300">
+                <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-3 bg-voxel-dark/50 -mx-6 -mt-6 p-4">
+                   <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]`}></div>
+                   <h3 className="font-bold text-sm uppercase tracking-wider">{category.title}</h3>
+                </div>
+                
+                <div className="space-y-4">
+                    {category.skills.map((skill, sIdx) => {
+                        // Generate a fake "confidence score" for the AI vibe
+                        const confidence = 85 + (skill.length % 15); 
+                        return (
+                           <BlockProgressBar key={skill} label={skill} progress={confidence} />
+                        );
+                    })}
+                </div>
+             </BlockCard>
+         ))}
+      </div>
+    </PageWrapper>
+  );
+};
+
+// Larger Social Button with slide effect
+interface SocialButtonProps {
+  href: string;
+  label: string;
+  icon: React.ElementType;
+}
+
+const SocialButton = ({ href, label, icon: Icon }: SocialButtonProps) => (
+  <a 
+    href={href} 
+    target="_blank" 
+    rel="noreferrer"
+    className="relative h-20 flex-1 min-w-[160px] bg-voxel-secondary border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center justify-center overflow-hidden group"
+  >
+    <span className="font-bold text-voxel-dark tracking-wider text-xl transition-transform duration-300 group-hover:-translate-y-20">
+      {label}
+    </span>
+    <div className="absolute inset-0 flex items-center justify-center translate-y-20 transition-transform duration-300 group-hover:translate-y-0 text-voxel-dark">
+      <Icon className="w-10 h-10" />
+    </div>
+  </a>
+);
+
+const ContactSection: React.FC = () => (
+   <PageWrapper>
+      <div className="max-w-5xl mx-auto w-full">
+         <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold mb-4">ESTABLISH CONNECTION</h2>
+            <p className="text-gray-400 font-mono">Initiate Handshake Protocol</p>
+         </div>
+
+         <BlockCard title="TRANSMISSION_UPLINK" className="shadow-voxel-xl bg-voxel-card/90">
+             <div className="grid md:grid-cols-2 gap-12 p-2">
+                <div className="flex flex-col justify-between">
+                   <div>
+                       <p className="text-gray-400 mb-8 leading-relaxed font-mono text-sm border-l-2 border-voxel-primary pl-4">
+                          Currently listening for opportunities in <strong className="text-white">AI Engineering</strong>, <strong className="text-white">NLP</strong>, and <strong className="text-white">Computer Vision</strong>. 
+                          Send a ping, and I'll acknowledge the packet ASAP.
+                       </p>
+                       
+                       <div className="space-y-4">
+                          <a href="mailto:ragunathravi73@gmail.com" className="flex items-center gap-4 p-4 bg-voxel-bg border-2 border-transparent hover:border-voxel-primary transition-all group cursor-pointer hover:translate-x-2">
+                             <div className="w-12 h-12 bg-voxel-card flex items-center justify-center border border-gray-700 group-hover:bg-voxel-primary group-hover:text-black transition-colors">
+                                <Mail className="w-6 h-6" />
+                             </div>
+                             <div>
+                                <p className="text-xs text-gray-500 uppercase font-bold">Email Protocol</p>
+                                <p className="font-mono text-sm break-all font-bold">ragunathravi73@gmail.com</p>
+                             </div>
+                          </a>
+
+                          <a href="https://wa.me/917825078508" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 bg-voxel-bg border-2 border-transparent hover:border-voxel-accent transition-all group cursor-pointer hover:translate-x-2">
+                             <div className="w-12 h-12 bg-voxel-card flex items-center justify-center border border-gray-700 group-hover:bg-voxel-accent group-hover:text-black transition-colors">
+                                <span className="font-bold text-xl">✆</span>
+                             </div>
+                             <div>
+                                <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp Channel</p>
+                                <p className="font-mono text-sm font-bold">+91 7825078508</p>
+                             </div>
+                          </a>
+                       </div>
+                   </div>
+
+                   <div className="flex flex-wrap gap-4 pt-8">
+                        <SocialButton href="https://www.linkedin.com/in/ragunath-r-a2a580247/" label="LINKEDIN" icon={Linkedin} />
+                        <SocialButton href="https://huggingface.co/ragunath-ravi" label="HUGGINGFACE" icon={Brain} />
+                        <SocialButton href="https://github.com/Ragu-123" label="GITHUB" icon={Github} />
+                        <SocialButton href="https://drive.google.com/file/d/1kM5NYSvwx1H__plrrWiPP9M2tsTT2IlU/view?usp=sharing" label="RESUME" icon={FileText} />
+                   </div>
+                </div>
+
+                <div className="bg-voxel-bg p-6 border-2 border-black relative mt-8 md:mt-0">
+                   <div className="absolute -top-3 -right-3 bg-voxel-danger text-white text-xs font-bold px-2 py-1 border border-black transform rotate-12 shadow-sm animate-pulse">
+                      LIVE FEED
+                   </div>
+                   <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                      <div>
+                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Source Identity</label>
+                         <BlockInput placeholder="Your Name" />
+                      </div>
+                      <div>
+                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Return Address (Email)</label>
+                         <BlockInput type="email" placeholder="email@domain.com" />
+                      </div>
+                      <div>
+                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Data Payload</label>
+                         <BlockTextArea rows={4} placeholder="Type your message..." />
+                      </div>
+                      <BlockButton type="submit" className="w-full" variant="primary">
+                         TRANSMIT DATA
+                      </BlockButton>
+                   </form>
+                </div>
+             </div>
+         </BlockCard>
+      </div>
+   </PageWrapper>
+);
+
+function App() {
+  const [activePage, setActivePage] = useState('home');
+
+  return (
+    <>
+      <VoxelScene />
+      <Layout activePage={activePage} onNavigate={setActivePage}>
+        {activePage === 'home' && <HeroSection onNavigate={setActivePage} />}
+        {activePage === 'about' && <AboutSection />}
+        {activePage === 'projects' && <ProjectsSection />}
+        {activePage === 'skills' && <SkillsSection />}
+        {activePage === 'contact' && <ContactSection />}
+      </Layout>
+    </>
+  );
+}
+
+export default App;
