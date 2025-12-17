@@ -5,13 +5,39 @@ import { BlockButton, BlockCard, BlockInput, BlockTextArea, BlockModal, BlockPro
 import { PROJECTS, SKILL_CATEGORIES, ABOUT_INFO } from './constants';
 import { ArrowRight, Github, ExternalLink, User, Mail, Brain, Database, Cpu, Terminal, Sparkles, Activity, Linkedin, FileText } from 'lucide-react';
 import { Project } from './types';
+import { motion } from 'framer-motion';
 
-// Page Transition Wrapper with Full Width
+// Page Transition Wrapper with Full Width and Staggered Children Animation
 const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="animate-in slide-in-from-bottom-8 fade-in duration-500 w-full px-6 md:px-12 lg:px-24 min-h-[70vh] flex flex-col justify-center max-w-[1920px] mx-auto">
+  <motion.div
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.5, ease: "easeOut" }}
+    className="w-full px-6 md:px-12 lg:px-24 min-h-[70vh] flex flex-col justify-center max-w-[1920px] mx-auto"
+  >
     {children}
-  </div>
+  </motion.div>
 );
+
+// Animation variants
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1
+  }
+};
 
 // AI Terminal Component
 const TerminalBlock = () => {
@@ -85,28 +111,34 @@ print("Ready to innovate.")`;
 
 const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavigate }) => {
   return (
-    <div className="flex flex-col lg:flex-row items-center justify-center min-h-[85vh] gap-12 w-full px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto">
+    <motion.div
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: false }}
+      variants={containerVariants}
+      className="flex flex-col lg:flex-row items-center justify-center min-h-[85vh] gap-12 w-full px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto"
+    >
        {/* Left: Content */}
        <div className="flex-1 text-center lg:text-left z-10">
-           <div className="inline-flex items-center gap-2 px-3 py-1 bg-voxel-accent/10 border border-voxel-accent text-voxel-accent font-bold text-xs mb-6 rounded-full animate-pulse">
+           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 bg-voxel-accent/10 border border-voxel-accent text-voxel-accent font-bold text-xs mb-6 rounded-full animate-pulse">
              <div className="w-2 h-2 bg-voxel-accent rounded-full"></div>
              AI ENGINEERING • MACHINE LEARNING
-           </div>
+           </motion.div>
            
-           <h1 className="text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tighter text-white drop-shadow-lg">
+           <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tighter text-white drop-shadow-lg">
               RAGUNATH <span className="text-voxel-primary">R</span>
-           </h1>
+           </motion.h1>
            
-           <p className="text-voxel-primary font-mono text-xl md:text-2xl mb-6 font-bold flex items-center justify-center lg:justify-start gap-3">
+           <motion.p variants={itemVariants} className="text-voxel-primary font-mono text-xl md:text-2xl mb-6 font-bold flex items-center justify-center lg:justify-start gap-3">
              <Terminal className="w-6 h-6" /> Machine Learning • NLP • CV
-           </p>
+           </motion.p>
            
-           <p className="text-gray-300 text-base md:text-lg mb-10 font-mono leading-relaxed max-w-2xl">
+           <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg mb-10 font-mono leading-relaxed max-w-2xl">
               Aspiring AI Engineer and a recent graduate with a strong passion for artificial intelligence. 
               Eager to contribute to industrial applications of AI and explore innovative solutions in NLP and CV.
-           </p>
+           </motion.p>
            
-           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
+           <motion.div variants={itemVariants} className="flex flex-wrap gap-4 justify-center lg:justify-start">
               <BlockButton size="lg" onClick={() => onNavigate('projects')}>
                 View Projects
               </BlockButton>
@@ -116,9 +148,9 @@ const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
               <BlockButton size="lg" variant="accent" href="logbook.html">
                 Logbook <ExternalLink className="w-4 h-4 ml-2" />
               </BlockButton>
-           </div>
+           </motion.div>
 
-           <div className="mt-12 flex gap-8 justify-center lg:justify-start text-gray-400 font-mono text-xs">
+           <motion.div variants={itemVariants} className="mt-12 flex gap-8 justify-center lg:justify-start text-gray-400 font-mono text-xs">
               <div className="flex items-center gap-2">
                  <Brain className="w-4 h-4 text-voxel-primary" /> Neural Networks
               </div>
@@ -128,91 +160,135 @@ const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
               <div className="flex items-center gap-2">
                  <Cpu className="w-4 h-4 text-voxel-accent" /> Model Optimization
               </div>
-           </div>
+           </motion.div>
        </div>
        
        {/* Right: Terminal Animation */}
-       <div className="flex-1 w-full max-w-xl lg:max-w-2xl transform hover:scale-[1.02] transition-transform duration-500 perspective-1000">
+       <motion.div
+         variants={itemVariants}
+         className="flex-1 w-full max-w-xl lg:max-w-2xl transform hover:scale-[1.02] transition-transform duration-500 perspective-1000"
+       >
            <div className="transform rotate-y-[-5deg] rotate-x-[5deg]">
               <TerminalBlock />
            </div>
-       </div>
-    </div>
+       </motion.div>
+    </motion.div>
   );
 };
 
 const AboutSection: React.FC = () => {
     return (
         <PageWrapper>
-            <div className="mb-8 border-b-4 border-voxel-card pb-6 flex items-center gap-4">
+            <motion.div
+              initial={{ x: -50, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              viewport={{ once: false }}
+              className="mb-8 border-b-4 border-voxel-card pb-6 flex items-center gap-4"
+            >
                 <User className="w-10 h-10 text-voxel-primary" />
                 <div>
                     <h2 className="text-4xl font-bold text-white">ABOUT ME</h2>
                     <p className="text-gray-400 font-mono">AI Engineering Student & Research Enthusiast</p>
                 </div>
-            </div>
+            </motion.div>
 
             <div className="grid lg:grid-cols-2 gap-8 pb-10">
-                <div className="space-y-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false }}
+                  variants={containerVariants}
+                  className="space-y-8"
+                >
                     {/* Education */}
-                    <BlockCard title="EDUCATION_HISTORY">
-                        <div className="space-y-8">
-                            {ABOUT_INFO.education.map((edu, idx) => (
-                                <div key={idx} className="relative pl-6 border-l-2 border-dashed border-gray-700">
-                                    <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black"></div>
-                                    <h4 className="text-lg font-bold text-white leading-tight">{edu.title}</h4>
-                                    <p className="text-voxel-primary font-bold text-sm mt-1">{edu.institution}</p>
-                                    <p className="text-gray-400 text-xs mt-2 font-mono bg-black/30 inline-block px-2 py-1 border border-gray-800">{edu.details}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </BlockCard>
+                    <motion.div variants={itemVariants}>
+                      <BlockCard title="EDUCATION_HISTORY">
+                          <div className="space-y-8">
+                              {ABOUT_INFO.education.map((edu, idx) => (
+                                  <motion.div
+                                    key={idx}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: idx * 0.1 }}
+                                    className="relative pl-6 border-l-2 border-dashed border-gray-700"
+                                  >
+                                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black"></div>
+                                      <h4 className="text-lg font-bold text-white leading-tight">{edu.title}</h4>
+                                      <p className="text-voxel-primary font-bold text-sm mt-1">{edu.institution}</p>
+                                      <p className="text-gray-400 text-xs mt-2 font-mono bg-black/30 inline-block px-2 py-1 border border-gray-800">{edu.details}</p>
+                                  </motion.div>
+                              ))}
+                          </div>
+                      </BlockCard>
+                    </motion.div>
 
                      {/* Research */}
-                    <BlockCard title="RESEARCH_VECTORS">
-                        <p className="text-gray-300 leading-relaxed text-sm mb-4">
-                            My work focuses on the intersection of <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">NLP</span> and <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">Computer Vision</span>.
-                        </p>
-                        <div className="grid grid-cols-2 gap-4">
-                           <div className="bg-voxel-dark p-3 border border-gray-700">
-                              <Sparkles className="w-5 h-5 text-yellow-400 mb-2" />
-                              <h5 className="font-bold text-xs text-white">Multimodal AI</h5>
-                              <p className="text-[10px] text-gray-500">Text + Image Fusion</p>
-                           </div>
-                           <div className="bg-voxel-dark p-3 border border-gray-700">
-                              <Database className="w-5 h-5 text-blue-400 mb-2" />
-                              <h5 className="font-bold text-xs text-white">RAG Systems</h5>
-                              <p className="text-[10px] text-gray-500">Knowledge Retrieval</p>
-                           </div>
-                        </div>
-                    </BlockCard>
-                </div>
+                    <motion.div variants={itemVariants}>
+                      <BlockCard title="RESEARCH_VECTORS">
+                          <p className="text-gray-300 leading-relaxed text-sm mb-4">
+                              My work focuses on the intersection of <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">NLP</span> and <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">Computer Vision</span>.
+                          </p>
+                          <div className="grid grid-cols-2 gap-4">
+                             <motion.div whileHover={{ scale: 1.05 }} className="bg-voxel-dark p-3 border border-gray-700">
+                                <Sparkles className="w-5 h-5 text-yellow-400 mb-2" />
+                                <h5 className="font-bold text-xs text-white">Multimodal AI</h5>
+                                <p className="text-[10px] text-gray-500">Text + Image Fusion</p>
+                             </motion.div>
+                             <motion.div whileHover={{ scale: 1.05 }} className="bg-voxel-dark p-3 border border-gray-700">
+                                <Database className="w-5 h-5 text-blue-400 mb-2" />
+                                <h5 className="font-bold text-xs text-white">RAG Systems</h5>
+                                <p className="text-[10px] text-gray-500">Knowledge Retrieval</p>
+                             </motion.div>
+                          </div>
+                      </BlockCard>
+                    </motion.div>
+                </motion.div>
 
-                <div className="space-y-8">
+                <motion.div
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={{ once: false }}
+                  variants={containerVariants}
+                  className="space-y-8"
+                >
                     {/* Experience */}
-                    <BlockCard title="EXPERIENCE_LOGS">
-                         <div className="space-y-6">
-                            {ABOUT_INFO.experience.map((exp, idx) => (
-                                <div key={idx} className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-colors group">
-                                    <h4 className="text-lg font-bold text-white group-hover:text-voxel-secondary transition-colors">{exp.title}</h4>
-                                    <p className="text-gray-400 text-sm mt-2 leading-relaxed font-mono">{exp.description}</p>
-                                </div>
-                            ))}
-                        </div>
-                    </BlockCard>
+                    <motion.div variants={itemVariants}>
+                      <BlockCard title="EXPERIENCE_LOGS">
+                           <div className="space-y-6">
+                              {ABOUT_INFO.experience.map((exp, idx) => (
+                                  <motion.div
+                                    key={idx}
+                                    whileHover={{ x: 5 }}
+                                    className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-colors group"
+                                  >
+                                      <h4 className="text-lg font-bold text-white group-hover:text-voxel-secondary transition-colors">{exp.title}</h4>
+                                      <p className="text-gray-400 text-sm mt-2 leading-relaxed font-mono">{exp.description}</p>
+                                  </motion.div>
+                              ))}
+                          </div>
+                      </BlockCard>
+                    </motion.div>
 
                     {/* Certifications */}
-                    <BlockCard title="CERTIFICATION_KEYS">
-                        <ul className="space-y-2">
-                            {ABOUT_INFO.certifications.map((cert, idx) => (
-                                <li key={idx} className="flex items-center gap-3 text-gray-300 text-sm p-2 hover:bg-white/5 transition-colors">
-                                    <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45"></div>
-                                    {cert}
-                                </li>
-                            ))}
-                        </ul>
-                    </BlockCard>
-                </div>
+                    <motion.div variants={itemVariants}>
+                      <BlockCard title="CERTIFICATION_KEYS">
+                          <ul className="space-y-2">
+                              {ABOUT_INFO.certifications.map((cert, idx) => (
+                                  <motion.li
+                                    key={idx}
+                                    initial={{ opacity: 0, x: 20 }}
+                                    whileInView={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: idx * 0.05 }}
+                                    className="flex items-center gap-3 text-gray-300 text-sm p-2 hover:bg-white/5 transition-colors"
+                                  >
+                                      <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45"></div>
+                                      {cert}
+                                  </motion.li>
+                              ))}
+                          </ul>
+                      </BlockCard>
+                    </motion.div>
+                </motion.div>
             </div>
         </PageWrapper>
     );
@@ -235,49 +311,56 @@ const ProjectsSection: React.FC = () => {
           </div>
       </div>
         
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+      <motion.div
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        viewport={{ once: false }}
+      >
           {PROJECTS.map((project) => (
-            <BlockCard 
-                key={project.id} 
-                title={project.id.toUpperCase()} 
-                className="group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full cursor-pointer hover:shadow-voxel-xl hover:border-voxel-primary"
-                onClick={() => setSelectedProject(project)}
-            >
-              <div className="flex-grow">
-                  <div className="flex items-center justify-between mb-3">
-                     <h3 className="text-lg font-bold text-white group-hover:text-voxel-primary transition-colors">{project.title}</h3>
-                     <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent" />
-                  </div>
-                  
-                  <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded">
-                     <p className="text-gray-400 font-mono text-xs leading-relaxed line-clamp-3">
-                       {project.description}
-                     </p>
-                  </div>
-                  
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {project.tags.slice(0, 3).map(tag => (
-                      <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase">
-                        {tag}
-                      </span>
-                    ))}
-                    {project.tags.length > 3 && (
-                        <span className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-gray-500">
-                        +{project.tags.length - 3}
-                      </span>
-                    )}
-                  </div>
-              </div>
-              
-              <div className="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center">
-                  <span className="text-xs font-bold text-voxel-accent font-mono animate-pulse">● STATUS: ACTIVE</span>
-                  <div className="bg-voxel-primary text-black p-1 rounded-sm">
-                     <ArrowRight className="w-4 h-4" />
-                  </div>
-              </div>
-            </BlockCard>
+            <motion.div variants={itemVariants} key={project.id}>
+              <BlockCard
+                  title={project.id.toUpperCase()}
+                  className="group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full cursor-pointer hover:shadow-voxel-xl hover:border-voxel-primary"
+                  onClick={() => setSelectedProject(project)}
+              >
+                <div className="flex-grow">
+                    <div className="flex items-center justify-between mb-3">
+                       <h3 className="text-lg font-bold text-white group-hover:text-voxel-primary transition-colors">{project.title}</h3>
+                       <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent" />
+                    </div>
+
+                    <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded">
+                       <p className="text-gray-400 font-mono text-xs leading-relaxed line-clamp-3">
+                         {project.description}
+                       </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mb-6">
+                      {project.tags.slice(0, 3).map(tag => (
+                        <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase">
+                          {tag}
+                        </span>
+                      ))}
+                      {project.tags.length > 3 && (
+                          <span className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-gray-500">
+                          +{project.tags.length - 3}
+                        </span>
+                      )}
+                    </div>
+                </div>
+
+                <div className="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center">
+                    <span className="text-xs font-bold text-voxel-accent font-mono animate-pulse">● STATUS: ACTIVE</span>
+                    <div className="bg-voxel-primary text-black p-1 rounded-sm">
+                       <ArrowRight className="w-4 h-4" />
+                    </div>
+                </div>
+              </BlockCard>
+            </motion.div>
           ))}
-      </div>
+      </motion.div>
 
       {/* Project Detail Modal */}
       <BlockModal 
@@ -333,31 +416,73 @@ const SkillsSection: React.FC = () => {
   return (
     <PageWrapper>
       <div className="text-center mb-10">
-         <h2 className="text-4xl font-bold mb-4">TECHNICAL CAPABILITIES</h2>
-         <div className="w-32 h-2 bg-voxel-primary mx-auto mb-4"></div>
-         <p className="text-gray-400 font-mono">Model Confidence & Proficiency</p>
+         <motion.h2
+           initial={{ y: -20, opacity: 0 }}
+           animate={{ y: 0, opacity: 1 }}
+           transition={{ delay: 0.1 }}
+           className="text-4xl font-bold mb-4"
+         >
+           TECHNICAL CAPABILITIES
+         </motion.h2>
+         <motion.div
+           initial={{ width: 0 }}
+           animate={{ width: 128 }}
+           transition={{ delay: 0.3, duration: 0.5 }}
+           className="h-2 bg-voxel-primary mx-auto mb-4"
+         ></motion.div>
+         <motion.p
+           initial={{ opacity: 0 }}
+           animate={{ opacity: 1 }}
+           transition={{ delay: 0.4 }}
+           className="text-gray-400 font-mono"
+         >
+           Verified Skill Matrix & Toolchain
+         </motion.p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12">
+      <motion.div
+        className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false }}
+      >
          {SKILL_CATEGORIES.map((category, idx) => (
-             <BlockCard key={idx} className="hover:scale-[1.01] transition-transform duration-300">
-                <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-3 bg-voxel-dark/50 -mx-6 -mt-6 p-4">
-                   <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]`}></div>
-                   <h3 className="font-bold text-sm uppercase tracking-wider">{category.title}</h3>
-                </div>
-                
-                <div className="space-y-4">
-                    {category.skills.map((skill, sIdx) => {
-                        // Generate a fake "confidence score" for the AI vibe
-                        const confidence = 85 + (skill.length % 15); 
-                        return (
-                           <BlockProgressBar key={skill} label={skill} progress={confidence} />
-                        );
-                    })}
-                </div>
-             </BlockCard>
+             <motion.div key={idx} variants={itemVariants}>
+               <BlockCard className="h-full hover:scale-[1.01] transition-transform duration-300">
+                  <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-3 bg-voxel-dark/50 -mx-6 -mt-6 p-4">
+                     <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]`}></div>
+                     <h3 className="font-bold text-sm uppercase tracking-wider">{category.title}</h3>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4">
+                      {category.skills.map((skill, sIdx) => (
+                        <motion.div
+                          key={skill.name}
+                          whileHover={{ scale: 1.05 }}
+                          className="flex flex-col items-center justify-center p-3 bg-voxel-bg border border-gray-700 hover:border-voxel-primary transition-colors gap-2 rounded-sm group"
+                        >
+                           {skill.logo ? (
+                             <div className="w-10 h-10 relative flex items-center justify-center">
+                               <img
+                                 src={skill.logo}
+                                 alt={skill.name}
+                                 className={`max-w-full max-h-full object-contain ${skill.invert ? 'filter invert brightness-0' : ''}`}
+                               />
+                             </div>
+                           ) : (
+                             <div className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded">
+                                <span className="text-xs font-bold">{skill.name[0]}</span>
+                             </div>
+                           )}
+                           <span className="text-[10px] font-bold text-gray-300 text-center uppercase group-hover:text-voxel-primary transition-colors">{skill.name}</span>
+                        </motion.div>
+                      ))}
+                  </div>
+               </BlockCard>
+             </motion.div>
          ))}
-      </div>
+      </motion.div>
     </PageWrapper>
   );
 };
@@ -370,11 +495,12 @@ interface SocialButtonProps {
 }
 
 const SocialButton = ({ href, label, icon: Icon }: SocialButtonProps) => (
-  <a 
+  <motion.a
+    whileHover={{ x: 2, y: 2, boxShadow: 'none' }}
     href={href} 
     target="_blank" 
     rel="noreferrer"
-    className="relative h-20 flex-1 min-w-[160px] bg-voxel-secondary border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all flex items-center justify-center overflow-hidden group"
+    className="relative h-20 flex-1 min-w-[160px] bg-voxel-secondary border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-hidden group"
   >
     <span className="font-bold text-voxel-dark tracking-wider text-xl transition-transform duration-300 group-hover:-translate-y-20">
       {label}
@@ -382,7 +508,7 @@ const SocialButton = ({ href, label, icon: Icon }: SocialButtonProps) => (
     <div className="absolute inset-0 flex items-center justify-center translate-y-20 transition-transform duration-300 group-hover:translate-y-0 text-voxel-dark">
       <Icon className="w-10 h-10" />
     </div>
-  </a>
+  </motion.a>
 );
 
 const ContactSection: React.FC = () => (

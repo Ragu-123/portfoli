@@ -16,9 +16,15 @@ export interface Project {
   type?: string;
 }
 
+export interface Skill {
+  name: string;
+  logo?: string;
+  invert?: boolean; // Some logos might need color inversion on dark bg
+}
+
 export interface SkillCategory {
   title: string;
-  skills: string[];
+  skills: Skill[];
 }
 
 export interface VoxelButtonProps {
