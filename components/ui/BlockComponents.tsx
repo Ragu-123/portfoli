@@ -1,6 +1,7 @@
 import React from 'react';
 import { VoxelButtonProps, VoxelCardProps } from '../../types';
 import { X } from 'lucide-react';
+import { MagneticButton, TiltCard } from './Animations';
 
 export const BlockButton: React.FC<VoxelButtonProps> = ({ 
   children, 
@@ -39,15 +40,17 @@ export const BlockButton: React.FC<VoxelButtonProps> = ({
   }
 
   return (
-    <button type={type} onClick={onClick} className={combinedClasses}>
-      {children}
-    </button>
+    <MagneticButton onClick={onClick} className="inline-block">
+        <button type={type} className={combinedClasses} style={{ width: '100%' }}>
+          {children}
+        </button>
+    </MagneticButton>
   );
 };
 
 export const BlockCard: React.FC<VoxelCardProps> = ({ children, className = '', title, onClick }) => {
   return (
-    <div onClick={onClick} className={`relative bg-voxel-card border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)] p-0 ${className}`}>
+    <TiltCard onClick={onClick} className={`relative bg-voxel-card border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)] p-0 h-full ${className}`}>
       {title && (
         <div className="bg-voxel-primary border-b-2 border-black p-3 flex items-center justify-between">
           <h3 className="font-bold text-voxel-dark uppercase tracking-widest text-sm truncate pr-2">{title}</h3>
@@ -57,10 +60,10 @@ export const BlockCard: React.FC<VoxelCardProps> = ({ children, className = '', 
           </div>
         </div>
       )}
-      <div className="p-6">
+      <div className="p-6 h-full flex flex-col">
         {children}
       </div>
-    </div>
+    </TiltCard>
   );
 };
 

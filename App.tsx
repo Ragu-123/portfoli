@@ -6,6 +6,7 @@ import { PROJECTS, SKILL_CATEGORIES, ABOUT_INFO } from './constants';
 import { ArrowRight, Github, ExternalLink, User, Mail, Brain, Database, Cpu, Terminal, Sparkles, Activity, Linkedin, FileText } from 'lucide-react';
 import { Project } from './types';
 import { motion } from 'framer-motion';
+import { TextReveal, ParallaxElement, SpotlightCard, GlitchText } from './components/ui/Animations';
 
 // Page Transition Wrapper with Full Width and Staggered Children Animation
 const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -32,10 +33,12 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 30, opacity: 0, scale: 0.95 },
   visible: {
     y: 0,
-    opacity: 1
+    opacity: 1,
+    scale: 1,
+    transition: { type: "spring", bounce: 0.3 }
   }
 };
 
@@ -84,11 +87,11 @@ print("Ready to innovate.")`;
   }, []);
 
   return (
-    <div className="bg-[#1e1e1e] border-2 border-gray-600 rounded-md p-4 shadow-xl font-mono text-xs md:text-sm text-left h-64 md:h-80 overflow-hidden relative opacity-90 backdrop-blur-sm">
+    <div className="bg-[#1e1e1e] border-2 border-gray-600 rounded-md p-4 shadow-xl font-mono text-xs md:text-sm text-left h-64 md:h-80 overflow-hidden relative opacity-90 backdrop-blur-sm transform hover:scale-[1.01] transition-all duration-300">
        <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
-         <div className="w-3 h-3 rounded-full bg-red-500"></div>
-         <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-         <div className="w-3 h-3 rounded-full bg-green-500"></div>
+         <div className="w-3 h-3 rounded-full bg-red-500 hover:scale-125 transition-transform"></div>
+         <div className="w-3 h-3 rounded-full bg-yellow-500 hover:scale-125 transition-transform"></div>
+         <div className="w-3 h-3 rounded-full bg-green-500 hover:scale-125 transition-transform"></div>
          <span className="text-gray-400 ml-2">ai_core.py</span>
        </div>
        <pre className="text-blue-300">
@@ -122,15 +125,16 @@ const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
        <div className="flex-1 text-center lg:text-left z-10">
            <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 bg-voxel-accent/10 border border-voxel-accent text-voxel-accent font-bold text-xs mb-6 rounded-full animate-pulse">
              <div className="w-2 h-2 bg-voxel-accent rounded-full"></div>
-             AI ENGINEERING • MACHINE LEARNING
+             <TextReveal text="AI ENGINEERING • MACHINE LEARNING" />
            </motion.div>
            
            <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tighter text-white drop-shadow-lg">
-              RAGUNATH <span className="text-voxel-primary">R</span>
+              <GlitchText text="RAGUNATH" /> <span className="text-voxel-primary">R</span>
            </motion.h1>
            
            <motion.p variants={itemVariants} className="text-voxel-primary font-mono text-xl md:text-2xl mb-6 font-bold flex items-center justify-center lg:justify-start gap-3">
-             <Terminal className="w-6 h-6" /> Machine Learning • NLP • CV
+             <Terminal className="w-6 h-6 animate-bounce" />
+             <TextReveal text="Machine Learning • NLP • CV" delay={0.5} />
            </motion.p>
            
            <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg mb-10 font-mono leading-relaxed max-w-2xl">
@@ -151,15 +155,15 @@ const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavig
            </motion.div>
 
            <motion.div variants={itemVariants} className="mt-12 flex gap-8 justify-center lg:justify-start text-gray-400 font-mono text-xs">
-              <div className="flex items-center gap-2">
+              <ParallaxElement offset={20} className="flex items-center gap-2">
                  <Brain className="w-4 h-4 text-voxel-primary" /> Neural Networks
-              </div>
-              <div className="flex items-center gap-2">
+              </ParallaxElement>
+              <ParallaxElement offset={-20} className="flex items-center gap-2">
                  <Database className="w-4 h-4 text-voxel-secondary" /> Data Processing
-              </div>
-              <div className="flex items-center gap-2">
+              </ParallaxElement>
+              <ParallaxElement offset={30} className="flex items-center gap-2">
                  <Cpu className="w-4 h-4 text-voxel-accent" /> Model Optimization
-              </div>
+              </ParallaxElement>
            </motion.div>
        </div>
        
@@ -212,7 +216,7 @@ const AboutSection: React.FC = () => {
                                     transition={{ delay: idx * 0.1 }}
                                     className="relative pl-6 border-l-2 border-dashed border-gray-700"
                                   >
-                                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black"></div>
+                                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black animate-pulse"></div>
                                       <h4 className="text-lg font-bold text-white leading-tight">{edu.title}</h4>
                                       <p className="text-voxel-primary font-bold text-sm mt-1">{edu.institution}</p>
                                       <p className="text-gray-400 text-xs mt-2 font-mono bg-black/30 inline-block px-2 py-1 border border-gray-800">{edu.details}</p>
@@ -229,12 +233,12 @@ const AboutSection: React.FC = () => {
                               My work focuses on the intersection of <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">NLP</span> and <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">Computer Vision</span>.
                           </p>
                           <div className="grid grid-cols-2 gap-4">
-                             <motion.div whileHover={{ scale: 1.05 }} className="bg-voxel-dark p-3 border border-gray-700">
+                             <motion.div whileHover={{ scale: 1.05, rotate: 2 }} className="bg-voxel-dark p-3 border border-gray-700 cursor-pointer">
                                 <Sparkles className="w-5 h-5 text-yellow-400 mb-2" />
                                 <h5 className="font-bold text-xs text-white">Multimodal AI</h5>
                                 <p className="text-[10px] text-gray-500">Text + Image Fusion</p>
                              </motion.div>
-                             <motion.div whileHover={{ scale: 1.05 }} className="bg-voxel-dark p-3 border border-gray-700">
+                             <motion.div whileHover={{ scale: 1.05, rotate: -2 }} className="bg-voxel-dark p-3 border border-gray-700 cursor-pointer">
                                 <Database className="w-5 h-5 text-blue-400 mb-2" />
                                 <h5 className="font-bold text-xs text-white">RAG Systems</h5>
                                 <p className="text-[10px] text-gray-500">Knowledge Retrieval</p>
@@ -258,8 +262,8 @@ const AboutSection: React.FC = () => {
                               {ABOUT_INFO.experience.map((exp, idx) => (
                                   <motion.div
                                     key={idx}
-                                    whileHover={{ x: 5 }}
-                                    className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-colors group"
+                                    whileHover={{ x: 10, backgroundColor: "rgba(255,255,255,0.05)" }}
+                                    className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-all group cursor-default"
                                   >
                                       <h4 className="text-lg font-bold text-white group-hover:text-voxel-secondary transition-colors">{exp.title}</h4>
                                       <p className="text-gray-400 text-sm mt-2 leading-relaxed font-mono">{exp.description}</p>
@@ -281,7 +285,7 @@ const AboutSection: React.FC = () => {
                                     transition={{ delay: idx * 0.05 }}
                                     className="flex items-center gap-3 text-gray-300 text-sm p-2 hover:bg-white/5 transition-colors"
                                   >
-                                      <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45"></div>
+                                      <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45 animate-spin duration-700"></div>
                                       {cert}
                                   </motion.li>
                               ))}
@@ -315,7 +319,7 @@ const ProjectsSection: React.FC = () => {
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
         variants={containerVariants}
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
         viewport={{ once: false }}
       >
           {PROJECTS.map((project) => (
@@ -328,10 +332,10 @@ const ProjectsSection: React.FC = () => {
                 <div className="flex-grow">
                     <div className="flex items-center justify-between mb-3">
                        <h3 className="text-lg font-bold text-white group-hover:text-voxel-primary transition-colors">{project.title}</h3>
-                       <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent" />
+                       <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent animate-pulse" />
                     </div>
 
-                    <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded">
+                    <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded group-hover:border-gray-600 transition-colors">
                        <p className="text-gray-400 font-mono text-xs leading-relaxed line-clamp-3">
                          {project.description}
                        </p>
@@ -339,7 +343,7 @@ const ProjectsSection: React.FC = () => {
 
                     <div className="flex flex-wrap gap-2 mb-6">
                       {project.tags.slice(0, 3).map(tag => (
-                        <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase">
+                        <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase group-hover:bg-voxel-secondary group-hover:text-voxel-dark transition-colors">
                           {tag}
                         </span>
                       ))}
@@ -353,9 +357,12 @@ const ProjectsSection: React.FC = () => {
 
                 <div className="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center">
                     <span className="text-xs font-bold text-voxel-accent font-mono animate-pulse">● STATUS: ACTIVE</span>
-                    <div className="bg-voxel-primary text-black p-1 rounded-sm">
+                    <motion.div
+                      whileHover={{ x: 5 }}
+                      className="bg-voxel-primary text-black p-1 rounded-sm"
+                    >
                        <ArrowRight className="w-4 h-4" />
-                    </div>
+                    </motion.div>
                 </div>
               </BlockCard>
             </motion.div>
@@ -390,7 +397,7 @@ const ProjectsSection: React.FC = () => {
                          <h4 className="text-voxel-accent font-bold mb-4 uppercase text-sm">Tech Stack</h4>
                          <div className="flex flex-wrap gap-2">
                             {selectedProject.techStack?.map(tech => (
-                                <span key={tech} className="block w-full text-center px-3 py-1 bg-[#1a1b26] border border-gray-600 text-gray-300 text-xs font-bold">
+                                <span key={tech} className="block w-full text-center px-3 py-1 bg-[#1a1b26] border border-gray-600 text-gray-300 text-xs font-bold hover:border-voxel-primary transition-colors cursor-default">
                                     {tech}
                                 </span>
                             )) || <span className="text-gray-500 text-xs">N/A</span>}
@@ -418,21 +425,24 @@ const SkillsSection: React.FC = () => {
       <div className="text-center mb-10">
          <motion.h2
            initial={{ y: -20, opacity: 0 }}
-           animate={{ y: 0, opacity: 1 }}
+           whileInView={{ y: 0, opacity: 1 }}
            transition={{ delay: 0.1 }}
+           viewport={{ once: false }}
            className="text-4xl font-bold mb-4"
          >
            TECHNICAL CAPABILITIES
          </motion.h2>
          <motion.div
            initial={{ width: 0 }}
-           animate={{ width: 128 }}
+           whileInView={{ width: 128 }}
+           viewport={{ once: false }}
            transition={{ delay: 0.3, duration: 0.5 }}
            className="h-2 bg-voxel-primary mx-auto mb-4"
          ></motion.div>
          <motion.p
            initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
+           whileInView={{ opacity: 1 }}
+           viewport={{ once: false }}
            transition={{ delay: 0.4 }}
            className="text-gray-400 font-mono"
          >
@@ -451,7 +461,7 @@ const SkillsSection: React.FC = () => {
              <motion.div key={idx} variants={itemVariants}>
                <BlockCard className="h-full hover:scale-[1.01] transition-transform duration-300">
                   <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-3 bg-voxel-dark/50 -mx-6 -mt-6 p-4">
-                     <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)]`}></div>
+                     <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)] animate-pulse`}></div>
                      <h3 className="font-bold text-sm uppercase tracking-wider">{category.title}</h3>
                   </div>
 
@@ -459,8 +469,9 @@ const SkillsSection: React.FC = () => {
                       {category.skills.map((skill, sIdx) => (
                         <motion.div
                           key={skill.name}
-                          whileHover={{ scale: 1.05 }}
-                          className="flex flex-col items-center justify-center p-3 bg-voxel-bg border border-gray-700 hover:border-voxel-primary transition-colors gap-2 rounded-sm group"
+                          whileHover={{ scale: 1.1, rotate: 2 }}
+                          whileTap={{ scale: 0.95 }}
+                          className="flex flex-col items-center justify-center p-3 bg-voxel-bg border border-gray-700 hover:border-voxel-primary transition-colors gap-2 rounded-sm group cursor-pointer"
                         >
                            {skill.logo ? (
                              <div className="w-10 h-10 relative flex items-center justify-center">
