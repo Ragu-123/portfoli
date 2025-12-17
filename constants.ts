@@ -102,27 +102,62 @@ export const PROJECTS: Project[] = [
 export const SKILL_CATEGORIES: SkillCategory[] = [
   {
     title: "Programming Languages",
-    skills: ["Python (Advanced)", "Java", "C", "HTML/CSS"]
+    skills: [
+      { name: "Python", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+      { name: "Java", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" },
+      { name: "C", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" },
+      { name: "HTML/CSS", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" }
+    ]
   },
   {
     title: "AI/ML Frameworks",
-    skills: ["PyTorch", "Scikit-Learn", "TensorFlow", "HuggingFace Transformers", "OpenAI Whisper"]
+    skills: [
+      { name: "PyTorch", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" },
+      { name: "Scikit-Learn", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg" },
+      { name: "TensorFlow", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tensorflow/tensorflow-original.svg" },
+      { name: "Hugging Face", logo: "https://huggingface.co/front/assets/huggingface_logo-noborder.svg" },
+      { name: "OpenAI", logo: "https://upload.wikimedia.org/wikipedia/commons/4/4d/OpenAI_Logo.svg", invert: true }
+    ]
   },
   {
     title: "Deep Learning & NLP",
-    skills: ["Large Language Models", "Fine-tuning Techniques", "Transformer Architectures", "Computer Vision", "Retrieval-Augmented Generation"]
+    skills: [
+      { name: "LLMs", logo: "https://cdn-icons-png.flaticon.com/512/8637/8637099.png", invert: true },
+      { name: "Fine-tuning", logo: "https://cdn-icons-png.flaticon.com/512/2103/2103633.png", invert: true },
+      { name: "Transformers", logo: "https://cdn-icons-png.flaticon.com/512/8637/8637107.png", invert: true },
+      { name: "Computer Vision", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/opencv/opencv-original.svg" },
+      { name: "RAG", logo: "https://cdn-icons-png.flaticon.com/512/2906/2906274.png", invert: true }
+    ]
   },
   {
     title: "Tools & Platforms",
-    skills: ["AWS (S3, EC2)", "Vector Databases (FAISS, Chroma)", "LangChain Agents", "Jupyter Notebooks", "Git & GitHub"]
+    skills: [
+      { name: "AWS", logo: "https://cdn.simpleicons.org/amazonwebservices/white" },
+      { name: "Vector DBs", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" },
+      { name: "LangChain", logo: "https://cdn.simpleicons.org/langchain/white" },
+      { name: "Jupyter", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg" },
+      { name: "Git & GitHub", logo: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" }
+    ]
   },
   {
     title: "Specialized Skills",
-    skills: ["Prompt Engineering", "Model Optimization", "Data Augmentation", "Network Graph Visualization", "Multimodal AI Systems"]
+    skills: [
+      { name: "Prompt Eng.", logo: "https://cdn-icons-png.flaticon.com/512/12222/12222560.png", invert: true },
+      { name: "Model Opt.", logo: "https://cdn-icons-png.flaticon.com/512/8099/8099466.png", invert: true },
+      { name: "Data Aug.", logo: "https://cdn-icons-png.flaticon.com/512/2920/2920349.png", invert: true },
+      { name: "Graph Vis.", logo: "https://cdn-icons-png.flaticon.com/512/2857/2857433.png", invert: true },
+      { name: "Multimodal AI", logo: "https://cdn-icons-png.flaticon.com/512/10664/10664869.png", invert: true }
+    ]
   },
   {
     title: "Soft Skills",
-    skills: ["Problem Solving", "Critical Thinking", "Team Collaboration", "Time Management", "Research & Analysis"]
+    skills: [
+      { name: "Problem Solving", logo: "https://cdn-icons-png.flaticon.com/512/3074/3074767.png", invert: true },
+      { name: "Critical Thinking", logo: "https://cdn-icons-png.flaticon.com/512/2436/2436855.png", invert: true },
+      { name: "Team Collab", logo: "https://cdn-icons-png.flaticon.com/512/1534/1534938.png", invert: true },
+      { name: "Time Mgmt", logo: "https://cdn-icons-png.flaticon.com/512/2088/2088617.png", invert: true },
+      { name: "Research", logo: "https://cdn-icons-png.flaticon.com/512/1087/1087840.png", invert: true }
+    ]
   }
 ];
 
