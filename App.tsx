@@ -1,618 +1,752 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { VoxelScene } from './components/3d/VoxelScene';
 import { Layout } from './components/Layout';
-import { BlockButton, BlockCard, BlockInput, BlockTextArea, BlockModal, BlockProgressBar } from './components/ui/BlockComponents';
+import { LuxButton, GlassCard, LuxInput, LuxTextArea, LuxModal, Tag, Divider, StatBlock } from './components/ui/BlockComponents';
+import { Reveal, RevealGroup, Parallax, SplitText, Magnetic, FADE_UP, STAGGER, FADE_IN, SCALE_IN } from './components/ui/Animations';
 import { PROJECTS, SKILL_CATEGORIES, ABOUT_INFO } from './constants';
-import { ArrowRight, Github, ExternalLink, User, Mail, Brain, Database, Cpu, Terminal, Sparkles, Activity, Linkedin, FileText } from 'lucide-react';
+import { ArrowRight, Github, ExternalLink, Mail, Brain, Database, Cpu, Linkedin, FileText, ArrowUpRight, ChevronDown, Sparkles, Code2, Layers, GraduationCap, Award, Briefcase } from 'lucide-react';
 import { Project } from './types';
-import { motion } from 'framer-motion';
-import { TextReveal, ParallaxElement, SpotlightCard, GlitchText } from './components/ui/Animations';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
-// Page Transition Wrapper with Full Width and Staggered Children Animation
-const PageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -20 }}
-    transition={{ duration: 0.5, ease: "easeOut" }}
-    className="w-full px-6 md:px-12 lg:px-24 min-h-[70vh] flex flex-col justify-center max-w-[1920px] mx-auto"
+// ─────────────────────────────────────────────
+// SECTION WRAPPER
+// ─────────────────────────────────────────────
+
+const Section: React.FC<{ children: React.ReactNode; className?: string; id?: string }> = ({
+  children, className = '', id
+}) => (
+  <section
+    id={id}
+    className={`relative w-full max-w-[1200px] mx-auto px-8 md:px-16 ${className}`}
   >
     {children}
-  </motion.div>
+  </section>
 );
 
-// Animation variants
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
+// ─────────────────────────────────────────────
+// SECTION LABEL
+// ─────────────────────────────────────────────
 
-const itemVariants = {
-  hidden: { y: 30, opacity: 0, scale: 0.95 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    scale: 1,
-    transition: { type: "spring", bounce: 0.3 }
-  }
-};
-
-// AI Terminal Component
-const TerminalBlock = () => {
-  const [text, setText] = useState('');
-  const [cursorVisible, setCursorVisible] = useState(true);
-  
-  const codeSnippet = `import torch
-import torch.nn as nn
-
-class RagunathNet(nn.Module):
-    def __init__(self):
-        super(RagunathNet, self).__init__()
-        self.vision = VisionTransformer(patch_size=16)
-        self.nlp = Llama3(params="8b")
-        self.skills = ["Deep Learning", "RAG", "CV"]
-
-    def forward(self, problem):
-        # Processing input...
-        insight = self.vision(problem)
-        solution = self.nlp(insight)
-        return solution
-
-# Initializing AI Engineer...
-model = RagunathNet()
-model.eval()
-print("Ready to innovate.")`;
-
-  useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      setText(codeSnippet.substring(0, index));
-      index++;
-      if (index > codeSnippet.length) {
-        clearInterval(timer);
-      }
-    }, 30); // Typing speed
-    
-    return () => clearInterval(timer);
-  }, []);
-
-  useEffect(() => {
-    const cursorTimer = setInterval(() => setCursorVisible(v => !v), 500);
-    return () => clearInterval(cursorTimer);
-  }, []);
-
-  return (
-    <div className="bg-[#1e1e1e] border-2 border-gray-600 rounded-md p-4 shadow-xl font-mono text-xs md:text-sm text-left h-64 md:h-80 overflow-hidden relative opacity-90 backdrop-blur-sm transform hover:scale-[1.01] transition-all duration-300">
-       <div className="flex items-center gap-2 mb-2 border-b border-gray-700 pb-2">
-         <div className="w-3 h-3 rounded-full bg-red-500 hover:scale-125 transition-transform"></div>
-         <div className="w-3 h-3 rounded-full bg-yellow-500 hover:scale-125 transition-transform"></div>
-         <div className="w-3 h-3 rounded-full bg-green-500 hover:scale-125 transition-transform"></div>
-         <span className="text-gray-400 ml-2">ai_core.py</span>
-       </div>
-       <pre className="text-blue-300">
-         <code dangerouslySetInnerHTML={{ 
-           __html: text.replace(/\n/g, '<br/>')
-                       .replace(/class/g, '<span class="text-purple-400">class</span>')
-                       .replace(/def/g, '<span class="text-purple-400">def</span>')
-                       .replace(/import/g, '<span class="text-purple-400">import</span>')
-                       .replace(/self/g, '<span class="text-orange-300">self</span>')
-                       .replace(/return/g, '<span class="text-purple-400">return</span>')
-         }} />
-         {cursorVisible && <span className="inline-block w-2 h-4 bg-white ml-1 align-middle"></span>}
-       </pre>
-       <div className="absolute bottom-2 right-2 text-green-500 text-xs animate-pulse">
-          ● SYSTEM ONLINE
-       </div>
+const SectionLabel: React.FC<{ index: string; label: string }> = ({ index, label }) => (
+  <Reveal variants={FADE_IN}>
+    <div className="flex items-center gap-3 mb-6">
+      <span className="font-display text-xs font-bold text-[#2997ff] tracking-widest uppercase">{index}</span>
+      <div className="h-px flex-1 bg-gradient-to-r from-[rgba(41,151,255,0.4)] to-transparent" style={{ maxWidth: 80 }} />
+      <span className="font-body text-xs tracking-widest uppercase text-[var(--text-3)]">{label}</span>
     </div>
-  );
-};
+  </Reveal>
+);
 
-const HeroSection: React.FC<{ onNavigate: (page: string) => void }> = ({ onNavigate }) => {
+// ─────────────────────────────────────────────
+// HERO SECTION
+// ─────────────────────────────────────────────
+
+const HeroSection: React.FC<{ onNavigate: (p: string) => void }> = ({ onNavigate }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: false }}
-      variants={containerVariants}
-      className="flex flex-col lg:flex-row items-center justify-center min-h-[85vh] gap-12 w-full px-6 md:px-12 lg:px-24 max-w-[1920px] mx-auto"
+      ref={ref}
+      className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
+      style={{ opacity }}
     >
-       {/* Left: Content */}
-       <div className="flex-1 text-center lg:text-left z-10">
-           <motion.div variants={itemVariants} className="inline-flex items-center gap-2 px-3 py-1 bg-voxel-accent/10 border border-voxel-accent text-voxel-accent font-bold text-xs mb-6 rounded-full animate-pulse">
-             <div className="w-2 h-2 bg-voxel-accent rounded-full"></div>
-             <TextReveal text="AI ENGINEERING • MACHINE LEARNING" />
-           </motion.div>
-           
-           <motion.h1 variants={itemVariants} className="text-6xl md:text-8xl font-bold mb-6 leading-none tracking-tighter text-white drop-shadow-lg">
-              <GlitchText text="RAGUNATH" /> <span className="text-voxel-primary">R</span>
-           </motion.h1>
-           
-           <motion.p variants={itemVariants} className="text-voxel-primary font-mono text-xl md:text-2xl mb-6 font-bold flex items-center justify-center lg:justify-start gap-3">
-             <Terminal className="w-6 h-6 animate-bounce" />
-             <TextReveal text="Machine Learning • NLP • CV" delay={0.5} />
-           </motion.p>
-           
-           <motion.p variants={itemVariants} className="text-gray-300 text-base md:text-lg mb-10 font-mono leading-relaxed max-w-2xl">
-              Aspiring AI Engineer and a recent graduate with a strong passion for artificial intelligence. 
-              Eager to contribute to industrial applications of AI and explore innovative solutions in NLP and CV.
-           </motion.p>
-           
-           <motion.div variants={itemVariants} className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <BlockButton size="lg" onClick={() => onNavigate('projects')}>
-                View Projects
-              </BlockButton>
-              <BlockButton size="lg" variant="secondary" onClick={() => onNavigate('contact')}>
-                Get in Touch
-              </BlockButton>
-              <BlockButton size="lg" variant="accent" href="logbook.html">
-                Logbook <ExternalLink className="w-4 h-4 ml-2" />
-              </BlockButton>
-           </motion.div>
+      {/* Giant background text — depth layer */}
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden"
+        style={{ y }}
+      >
+        <span
+          className="font-display font-black whitespace-nowrap leading-none"
+          style={{
+            fontSize: 'clamp(100px, 22vw, 340px)',
+            color: 'transparent',
+            WebkitTextStroke: '1px rgba(255,255,255,0.032)',
+            letterSpacing: '-0.04em',
+          }}
+        >
+          ENGINEER
+        </span>
+      </motion.div>
 
-           <motion.div variants={itemVariants} className="mt-12 flex gap-8 justify-center lg:justify-start text-gray-400 font-mono text-xs">
-              <ParallaxElement offset={20} className="flex items-center gap-2">
-                 <Brain className="w-4 h-4 text-voxel-primary" /> Neural Networks
-              </ParallaxElement>
-              <ParallaxElement offset={-20} className="flex items-center gap-2">
-                 <Database className="w-4 h-4 text-voxel-secondary" /> Data Processing
-              </ParallaxElement>
-              <ParallaxElement offset={30} className="flex items-center gap-2">
-                 <Cpu className="w-4 h-4 text-voxel-accent" /> Model Optimization
-              </ParallaxElement>
-           </motion.div>
-       </div>
-       
-       {/* Right: Terminal Animation */}
-       <motion.div
-         variants={itemVariants}
-         className="flex-1 w-full max-w-xl lg:max-w-2xl transform hover:scale-[1.02] transition-transform duration-500 perspective-1000"
-       >
-           <div className="transform rotate-y-[-5deg] rotate-x-[5deg]">
-              <TerminalBlock />
-           </div>
-       </motion.div>
+      {/* Content */}
+      <div className="relative z-10 w-full max-w-[1200px] mx-auto px-8 md:px-16 pt-28 pb-20">
+        {/* Badge */}
+        <Reveal variants={FADE_UP} delay={0.1}>
+          <div className="flex items-center gap-2 mb-8">
+            <motion.div
+              className="w-2 h-2 rounded-full bg-[#30d158]"
+              animate={{ scale: [1, 1.4, 1], opacity: [1, 0.6, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+            />
+            <span className="font-body text-sm text-[rgba(240,240,248,0.6)] tracking-wide">
+              Open to AI Engineering roles
+            </span>
+          </div>
+        </Reveal>
+
+        {/* Main headline */}
+        <div className="mb-6">
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={STAGGER}
+            className="overflow-hidden"
+          >
+            {/* Name line 1 */}
+            <div className="overflow-hidden">
+              <motion.h1
+                variants={{
+                  hidden: { y: '110%', opacity: 0 },
+                  visible: { y: '0%', opacity: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
+                }}
+                className="font-display font-black leading-[0.9] tracking-tighter text-white"
+                style={{ fontSize: 'clamp(56px, 10vw, 148px)' }}
+              >
+                RAGUNATH
+              </motion.h1>
+            </div>
+            {/* Name line 2 */}
+            <div className="overflow-hidden">
+              <motion.h1
+                variants={{
+                  hidden: { y: '110%', opacity: 0 },
+                  visible: { y: '0%', opacity: 1, transition: { duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.08 } }
+                }}
+                className="font-display font-black leading-[0.9] tracking-tighter"
+                style={{
+                  fontSize: 'clamp(56px, 10vw, 148px)',
+                  background: 'linear-gradient(135deg, #2997ff 0%, #7ed4fd 50%, #2997ff 100%)',
+                  backgroundSize: '200% auto',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  animation: 'shimmer 4s linear infinite',
+                }}
+              >
+                R.
+              </motion.h1>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Role */}
+        <Reveal variants={FADE_UP} delay={0.35}>
+          <div className="flex flex-wrap items-center gap-3 mb-8">
+            {['Machine Learning', 'NLP', 'Computer Vision'].map((tag, i) => (
+              <Tag key={i} accent={i === 0}>{tag}</Tag>
+            ))}
+          </div>
+        </Reveal>
+
+        {/* Description */}
+        <Reveal variants={FADE_UP} delay={0.45}>
+          <p className="max-w-xl font-body text-lg md:text-xl text-[rgba(240,240,248,0.62)] leading-relaxed mb-10">
+            Aspiring AI Engineer and recent graduate passionate about building{' '}
+            <span className="text-white font-medium">intelligent systems</span> at the intersection
+            of NLP, Computer Vision, and RAG architectures.
+          </p>
+        </Reveal>
+
+        {/* CTAs */}
+        <Reveal variants={FADE_UP} delay={0.55}>
+          <div className="flex flex-wrap items-center gap-4">
+            <LuxButton size="lg" onClick={() => onNavigate('projects')}>
+              View Projects <ArrowRight size={18} />
+            </LuxButton>
+            <LuxButton size="lg" variant="secondary" onClick={() => onNavigate('contact')}>
+              Get in Touch
+            </LuxButton>
+            <LuxButton size="lg" variant="ghost" href="logbook.html">
+              Logbook <ArrowUpRight size={16} />
+            </LuxButton>
+          </div>
+        </Reveal>
+
+        {/* Stats row */}
+        <Reveal variants={FADE_UP} delay={0.65}>
+          <div className="mt-20 pt-10 border-t border-white/[0.07] grid grid-cols-3 gap-8 max-w-md">
+            <StatBlock value="8+" label="Projects" />
+            <StatBlock value="96%" label="Best Accuracy" />
+            <StatBlock value="4" label="Certifications" />
+          </div>
+        </Reveal>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-[var(--text-3)]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5, duration: 0.6 }}
+      >
+        <span className="font-body text-xs tracking-widest uppercase">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}
+        >
+          <ChevronDown size={16} />
+        </motion.div>
+      </motion.div>
+
+      {/* Shimmer animation injected */}
+      <style>{`@keyframes shimmer { 0% { background-position: 0% center } 100% { background-position: 200% center } }`}</style>
     </motion.div>
   );
 };
 
-const AboutSection: React.FC = () => {
-    return (
-        <PageWrapper>
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              viewport={{ once: false }}
-              className="mb-8 border-b-4 border-voxel-card pb-6 flex items-center gap-4"
-            >
-                <User className="w-10 h-10 text-voxel-primary" />
-                <div>
-                    <h2 className="text-4xl font-bold text-white">ABOUT ME</h2>
-                    <p className="text-gray-400 font-mono">AI Engineering Student & Research Enthusiast</p>
+// ─────────────────────────────────────────────
+// ABOUT SECTION
+// ─────────────────────────────────────────────
+
+const AboutSection: React.FC = () => (
+  <div className="py-28 min-h-screen">
+    <Section>
+      <SectionLabel index="01" label="About" />
+
+      <div className="grid lg:grid-cols-[1fr_1fr] gap-16 items-start">
+        {/* Left */}
+        <div>
+          <SplitText
+            text="Building AI that matters."
+            className="font-display font-bold text-4xl md:text-5xl leading-tight text-white mb-8"
+            delay={0}
+          />
+
+          <RevealGroup>
+            <motion.p variants={FADE_UP} className="font-body text-base text-[var(--text-2)] leading-relaxed mb-5">
+              I'm a B.Tech AI & ML graduate from Saveetha Engineering College, Chennai (Class of 2026),
+              with a GPA of 7.9/10 and deep hands-on experience in building and deploying ML systems.
+            </motion.p>
+            <motion.p variants={FADE_UP} className="font-body text-base text-[var(--text-2)] leading-relaxed mb-5">
+              My focus areas span <span className="text-white">Large Language Models</span>,{' '}
+              <span className="text-white">Retrieval-Augmented Generation</span>, and{' '}
+              <span className="text-white">Computer Vision</span>. I've built real-world systems —
+              from a Tamil ASR model achieving 22% WER to a medical image captioning model with
+              near-zero loss.
+            </motion.p>
+            <motion.p variants={FADE_UP} className="font-body text-base text-[var(--text-2)] leading-relaxed">
+              Beyond code, I'm fascinated by the intersection of multimodal AI and practical
+              human applications — making AI genuinely useful, accessible, and impactful.
+            </motion.p>
+          </RevealGroup>
+
+          {/* Experience highlight */}
+          <Reveal variants={FADE_UP} delay={0.2}>
+            <div className="mt-10 p-5 rounded-2xl border border-[rgba(41,151,255,0.2)] bg-[rgba(41,151,255,0.06)]">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-[rgba(41,151,255,0.15)] flex items-center justify-center flex-shrink-0">
+                  <Briefcase size={18} className="text-[#2997ff]" />
                 </div>
-            </motion.div>
-
-            <div className="grid lg:grid-cols-2 gap-8 pb-10">
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: false }}
-                  variants={containerVariants}
-                  className="space-y-8"
-                >
-                    {/* Education */}
-                    <motion.div variants={itemVariants}>
-                      <BlockCard title="EDUCATION_HISTORY">
-                          <div className="space-y-8">
-                              {ABOUT_INFO.education.map((edu, idx) => (
-                                  <motion.div
-                                    key={idx}
-                                    initial={{ opacity: 0, x: -20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.1 }}
-                                    className="relative pl-6 border-l-2 border-dashed border-gray-700"
-                                  >
-                                      <div className="absolute -left-[9px] top-0 w-4 h-4 bg-voxel-primary rounded-full border-2 border-black animate-pulse"></div>
-                                      <h4 className="text-lg font-bold text-white leading-tight">{edu.title}</h4>
-                                      <p className="text-voxel-primary font-bold text-sm mt-1">{edu.institution}</p>
-                                      <p className="text-gray-400 text-xs mt-2 font-mono bg-black/30 inline-block px-2 py-1 border border-gray-800">{edu.details}</p>
-                                  </motion.div>
-                              ))}
-                          </div>
-                      </BlockCard>
-                    </motion.div>
-
-                     {/* Research */}
-                    <motion.div variants={itemVariants}>
-                      <BlockCard title="RESEARCH_VECTORS">
-                          <p className="text-gray-300 leading-relaxed text-sm mb-4">
-                              My work focuses on the intersection of <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">NLP</span> and <span className="text-voxel-accent font-bold bg-voxel-accent/10 px-1">Computer Vision</span>.
-                          </p>
-                          <div className="grid grid-cols-2 gap-4">
-                             <motion.div whileHover={{ scale: 1.05, rotate: 2 }} className="bg-voxel-dark p-3 border border-gray-700 cursor-pointer">
-                                <Sparkles className="w-5 h-5 text-yellow-400 mb-2" />
-                                <h5 className="font-bold text-xs text-white">Multimodal AI</h5>
-                                <p className="text-[10px] text-gray-500">Text + Image Fusion</p>
-                             </motion.div>
-                             <motion.div whileHover={{ scale: 1.05, rotate: -2 }} className="bg-voxel-dark p-3 border border-gray-700 cursor-pointer">
-                                <Database className="w-5 h-5 text-blue-400 mb-2" />
-                                <h5 className="font-bold text-xs text-white">RAG Systems</h5>
-                                <p className="text-[10px] text-gray-500">Knowledge Retrieval</p>
-                             </motion.div>
-                          </div>
-                      </BlockCard>
-                    </motion.div>
-                </motion.div>
-
-                <motion.div
-                  initial="hidden"
-                  whileInView="visible"
-                  viewport={{ once: false }}
-                  variants={containerVariants}
-                  className="space-y-8"
-                >
-                    {/* Experience */}
-                    <motion.div variants={itemVariants}>
-                      <BlockCard title="EXPERIENCE_LOGS">
-                           <div className="space-y-6">
-                              {ABOUT_INFO.experience.map((exp, idx) => (
-                                  <motion.div
-                                    key={idx}
-                                    whileHover={{ x: 10, backgroundColor: "rgba(255,255,255,0.05)" }}
-                                    className="bg-voxel-dark/50 p-4 border border-gray-700 hover:border-voxel-secondary transition-all group cursor-default"
-                                  >
-                                      <h4 className="text-lg font-bold text-white group-hover:text-voxel-secondary transition-colors">{exp.title}</h4>
-                                      <p className="text-gray-400 text-sm mt-2 leading-relaxed font-mono">{exp.description}</p>
-                                  </motion.div>
-                              ))}
-                          </div>
-                      </BlockCard>
-                    </motion.div>
-
-                    {/* Certifications */}
-                    <motion.div variants={itemVariants}>
-                      <BlockCard title="CERTIFICATION_KEYS">
-                          <ul className="space-y-2">
-                              {ABOUT_INFO.certifications.map((cert, idx) => (
-                                  <motion.li
-                                    key={idx}
-                                    initial={{ opacity: 0, x: 20 }}
-                                    whileInView={{ opacity: 1, x: 0 }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className="flex items-center gap-3 text-gray-300 text-sm p-2 hover:bg-white/5 transition-colors"
-                                  >
-                                      <div className="w-1.5 h-1.5 bg-voxel-accent rotate-45 animate-spin duration-700"></div>
-                                      {cert}
-                                  </motion.li>
-                              ))}
-                          </ul>
-                      </BlockCard>
-                    </motion.div>
-                </motion.div>
+                <div>
+                  <h4 className="font-display font-semibold text-white mb-1">AI Engineer Intern</h4>
+                  <p className="font-body text-sm text-[var(--text-2)] leading-relaxed">
+                    Built facial recognition system using Vision Transformer achieving{' '}
+                    <span className="text-[#30d158] font-semibold">96% accuracy</span>.
+                    Enhanced model performance via data augmentation across 50K+ images.
+                  </p>
+                </div>
+              </div>
             </div>
-        </PageWrapper>
-    );
-};
+          </Reveal>
 
-const ProjectsSection: React.FC = () => {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+          {/* Achievements */}
+          <Reveal variants={FADE_UP} delay={0.3}>
+            <div className="mt-5 p-5 rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-xl bg-white/[0.07] flex items-center justify-center flex-shrink-0">
+                  <Award size={18} className="text-[rgba(240,240,248,0.6)]" />
+                </div>
+                <div>
+                  <h4 className="font-display font-semibold text-white mb-1">Recognition</h4>
+                  <p className="font-body text-sm text-[var(--text-2)]">
+                    IIT Madras Shaastra IndustriAI — Top 50 of 200+ teams •{' '}
+                    IBM Datathon participant • Koselay Award for academic excellence
+                  </p>
+                </div>
+              </div>
+            </div>
+          </Reveal>
+        </div>
 
-  return (
-    <PageWrapper>
-      <div className="flex items-end justify-between mb-8 border-b-4 border-voxel-card pb-6">
-          <div>
-             <h2 className="text-4xl font-bold mb-2">PROJECTS</h2>
-             <p className="text-gray-400 font-mono">Deployed AI Models & Systems</p>
-          </div>
-          <div className="hidden md:block">
-             <BlockButton size="sm" variant="secondary" href="https://github.com/Ragu-123" target="_blank">
-               <Github className="w-4 h-4 mr-2" /> View GitHub Profile
-             </BlockButton>
-          </div>
-      </div>
-        
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false }}
-      >
-          {PROJECTS.map((project) => (
-            <motion.div variants={itemVariants} key={project.id}>
-              <BlockCard
-                  title={project.id.toUpperCase()}
-                  className="group hover:-translate-y-2 transition-transform duration-300 flex flex-col h-full cursor-pointer hover:shadow-voxel-xl hover:border-voxel-primary"
-                  onClick={() => setSelectedProject(project)}
-              >
-                <div className="flex-grow">
-                    <div className="flex items-center justify-between mb-3">
-                       <h3 className="text-lg font-bold text-white group-hover:text-voxel-primary transition-colors">{project.title}</h3>
-                       <Activity className="w-4 h-4 text-gray-600 group-hover:text-voxel-accent animate-pulse" />
-                    </div>
-
-                    <div className="mb-4 bg-black/20 p-2 border border-gray-800 rounded group-hover:border-gray-600 transition-colors">
-                       <p className="text-gray-400 font-mono text-xs leading-relaxed line-clamp-3">
-                         {project.description}
-                       </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2 mb-6">
-                      {project.tags.slice(0, 3).map(tag => (
-                        <span key={tag} className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-voxel-secondary uppercase group-hover:bg-voxel-secondary group-hover:text-voxel-dark transition-colors">
-                          {tag}
-                        </span>
-                      ))}
-                      {project.tags.length > 3 && (
-                          <span className="px-2 py-1 text-[10px] font-bold bg-voxel-dark border border-gray-700 text-gray-500">
-                          +{project.tags.length - 3}
-                        </span>
+        {/* Right */}
+        <div className="space-y-5">
+          {/* Education timeline */}
+          <Reveal variants={SCALE_IN}>
+            <GlassCard title="Education">
+              <div className="space-y-6">
+                {ABOUT_INFO.education.map((edu, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, x: 20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: i * 0.1, duration: 0.6 }}
+                    className="flex gap-4"
+                  >
+                    <div className="flex flex-col items-center">
+                      <div className="w-8 h-8 rounded-full border border-[rgba(41,151,255,0.4)] bg-[rgba(41,151,255,0.1)] flex items-center justify-center flex-shrink-0">
+                        <GraduationCap size={14} className="text-[#2997ff]" />
+                      </div>
+                      {i < ABOUT_INFO.education.length - 1 && (
+                        <div className="w-px flex-1 mt-2 bg-white/[0.07]" />
                       )}
                     </div>
-                </div>
-
-                <div className="mt-auto pt-4 border-t border-gray-800 flex justify-between items-center">
-                    <span className="text-xs font-bold text-voxel-accent font-mono animate-pulse">● STATUS: ACTIVE</span>
-                    <motion.div
-                      whileHover={{ x: 5 }}
-                      className="bg-voxel-primary text-black p-1 rounded-sm"
-                    >
-                       <ArrowRight className="w-4 h-4" />
-                    </motion.div>
-                </div>
-              </BlockCard>
-            </motion.div>
-          ))}
-      </motion.div>
-
-      {/* Project Detail Modal */}
-      <BlockModal 
-        isOpen={!!selectedProject} 
-        onClose={() => setSelectedProject(null)}
-        title={selectedProject?.title}
-      >
-        {selectedProject && (
-            <div className="space-y-6">
-                <div className="flex gap-4 mb-4">
-                     <span className="bg-voxel-primary text-voxel-dark px-2 py-1 text-xs font-bold border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        MODEL: {selectedProject.tags[0]}
-                     </span>
-                     <span className="bg-voxel-secondary text-voxel-dark px-2 py-1 text-xs font-bold border border-black shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
-                        STATUS: DEPLOYED
-                     </span>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                    <div className="md:col-span-2">
-                        <h4 className="text-voxel-primary font-bold mb-2 uppercase text-sm border-b border-gray-800 pb-1">System Architecture</h4>
-                        <p className="text-gray-300 leading-relaxed font-mono text-sm md:text-base">
-                            {selectedProject.fullDescription || selectedProject.description}
-                        </p>
+                    <div className="pb-4 min-w-0">
+                      <h4 className="font-display font-semibold text-white text-sm leading-snug">{edu.title}</h4>
+                      <p className="font-body text-xs text-[#2997ff] mt-0.5">{edu.institution}</p>
+                      <p className="font-body text-xs text-[var(--text-3)] mt-1 font-mono">{edu.details}</p>
                     </div>
-                    <div className="bg-voxel-dark p-4 border border-gray-700 h-fit">
-                         <h4 className="text-voxel-accent font-bold mb-4 uppercase text-sm">Tech Stack</h4>
-                         <div className="flex flex-wrap gap-2">
-                            {selectedProject.techStack?.map(tech => (
-                                <span key={tech} className="block w-full text-center px-3 py-1 bg-[#1a1b26] border border-gray-600 text-gray-300 text-xs font-bold hover:border-voxel-primary transition-colors cursor-default">
-                                    {tech}
-                                </span>
-                            )) || <span className="text-gray-500 text-xs">N/A</span>}
-                        </div>
-                    </div>
-                </div>
+                  </motion.div>
+                ))}
+              </div>
+            </GlassCard>
+          </Reveal>
 
-                <div className="pt-6 border-t border-gray-700 flex flex-wrap gap-4 justify-end">
-                    {selectedProject.links.map(link => (
-                        <BlockButton key={link.label} size="sm" variant="primary" href={link.url} target="_blank">
-                            {link.label} <ExternalLink className="w-3 h-3 ml-2" />
-                        </BlockButton>
-                    ))}
-                </div>
-            </div>
-        )}
-      </BlockModal>
-    </PageWrapper>
-  );
-};
+          {/* Certifications */}
+          <Reveal variants={SCALE_IN} delay={0.1}>
+            <GlassCard title="Certifications">
+              <div className="flex flex-wrap gap-2">
+                {ABOUT_INFO.certifications.map((cert, i) => (
+                  <motion.div
+                    key={i}
+                    initial={{ opacity: 0, scale: 0.85 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: i * 0.05 }}
+                  >
+                    <Tag>{cert.split('(')[0].trim()}</Tag>
+                  </motion.div>
+                ))}
+              </div>
+            </GlassCard>
+          </Reveal>
 
-const SkillsSection: React.FC = () => {
+          {/* Research focus */}
+          <Reveal variants={SCALE_IN} delay={0.2}>
+            <GlassCard title="Research Focus">
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: <Brain size={18} />, title: 'Multimodal AI', desc: 'Text + Vision fusion' },
+                  { icon: <Database size={18} />, title: 'RAG Systems', desc: 'Knowledge retrieval' },
+                  { icon: <Cpu size={18} />, title: 'LLM Fine-tuning', desc: 'Task-specific models' },
+                  { icon: <Layers size={18} />, title: 'Computer Vision', desc: 'Medical & industrial' },
+                ].map((item, i) => (
+                  <motion.div
+                    key={i}
+                    className="p-3 rounded-xl bg-white/[0.04] border border-white/[0.06] hover:border-[rgba(41,151,255,0.3)] transition-colors group"
+                    whileHover={{ scale: 1.03 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <div className="text-[var(--text-3)] group-hover:text-[#2997ff] transition-colors mb-2">{item.icon}</div>
+                    <div className="font-display font-semibold text-xs text-white">{item.title}</div>
+                    <div className="font-body text-[10px] text-[var(--text-3)] mt-0.5">{item.desc}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </GlassCard>
+          </Reveal>
+        </div>
+      </div>
+    </Section>
+  </div>
+);
+
+// ─────────────────────────────────────────────
+// PROJECTS SECTION
+// ─────────────────────────────────────────────
+
+const ProjectCard: React.FC<{ project: Project; onClick: () => void; index: number }> = ({ project, onClick, index }) => (
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    whileInView={{ opacity: 1, y: 0 }}
+    viewport={{ once: false, margin: '-40px' }}
+    transition={{ delay: index * 0.07, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+    whileHover={{ y: -6 }}
+    onClick={onClick}
+    className="group cursor-pointer flex-shrink-0 w-[85vw] md:w-[420px] snap-start"
+  >
+    <div className="h-full rounded-2xl border border-white/[0.08] bg-white/[0.03] hover:bg-white/[0.06] hover:border-white/[0.16] backdrop-blur-xl transition-all duration-300 overflow-hidden">
+      {/* Card header band */}
+      <div className="h-1.5 w-full" style={{
+        background: `hsl(${(index * 47 + 200) % 360}, 70%, 58%)`,
+        opacity: 0.7,
+      }} />
+
+      <div className="p-6">
+        {/* Top row */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex flex-wrap gap-2">
+            {project.tags.slice(0, 2).map(t => <Tag key={t}>{t}</Tag>)}
+            {project.tags.length > 2 && <Tag>+{project.tags.length - 2}</Tag>}
+          </div>
+          <motion.div
+            className="w-8 h-8 rounded-xl flex items-center justify-center text-[var(--text-3)] border border-white/[0.08] group-hover:border-[rgba(41,151,255,0.4)] group-hover:text-[#2997ff] transition-all"
+            whileHover={{ rotate: -45 }}
+          >
+            <ArrowUpRight size={15} />
+          </motion.div>
+        </div>
+
+        {/* Title */}
+        <h3 className="font-display font-bold text-xl text-white mb-3 group-hover:text-gradient-accent transition-all">
+          {project.title}
+        </h3>
+
+        {/* Description */}
+        <p className="font-body text-sm text-[var(--text-2)] leading-relaxed line-clamp-3 mb-5">
+          {project.description}
+        </p>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between pt-4 border-t border-white/[0.06]">
+          <div className="flex items-center gap-1.5">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#30d158] animate-pulse" />
+            <span className="font-body text-xs text-[var(--text-3)]">Active</span>
+          </div>
+          <div className="flex gap-3">
+            {project.links.slice(0, 2).map(link => (
+              <a
+                key={link.label}
+                href={link.url}
+                target="_blank"
+                rel="noreferrer"
+                onClick={e => e.stopPropagation()}
+                className="font-body text-xs text-[var(--text-3)] hover:text-white transition-colors flex items-center gap-1"
+              >
+                {link.label} <ExternalLink size={10} />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </motion.div>
+);
+
+const ProjectsSection: React.FC = () => {
+  const [selected, setSelected] = useState<Project | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
   return (
-    <PageWrapper>
-      <div className="text-center mb-10">
-         <motion.h2
-           initial={{ y: -20, opacity: 0 }}
-           whileInView={{ y: 0, opacity: 1 }}
-           transition={{ delay: 0.1 }}
-           viewport={{ once: false }}
-           className="text-4xl font-bold mb-4"
-         >
-           TECHNICAL CAPABILITIES
-         </motion.h2>
-         <motion.div
-           initial={{ width: 0 }}
-           whileInView={{ width: 128 }}
-           viewport={{ once: false }}
-           transition={{ delay: 0.3, duration: 0.5 }}
-           className="h-2 bg-voxel-primary mx-auto mb-4"
-         ></motion.div>
-         <motion.p
-           initial={{ opacity: 0 }}
-           whileInView={{ opacity: 1 }}
-           viewport={{ once: false }}
-           transition={{ delay: 0.4 }}
-           className="text-gray-400 font-mono"
-         >
-           Verified Skill Matrix & Toolchain
-         </motion.p>
+    <div className="py-28">
+      <Section>
+        <SectionLabel index="02" label="Work" />
+        <div className="flex items-end justify-between mb-12">
+          <SplitText
+            text="Selected Projects"
+            className="font-display font-bold text-4xl md:text-5xl text-white leading-tight"
+          />
+          <Reveal variants={FADE_IN}>
+            <a href="https://github.com/Ragu-123" target="_blank" rel="noreferrer"
+              className="hidden md:flex items-center gap-2 font-body text-sm text-[var(--text-2)] hover:text-white transition-colors"
+            >
+              <Github size={16} /> GitHub Profile <ArrowUpRight size={14} />
+            </a>
+          </Reveal>
+        </div>
+      </Section>
+
+      {/* Horizontal scroll carousel — full bleed */}
+      <div className="relative">
+        {/* Left fade */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none"
+          style={{ background: 'linear-gradient(90deg, var(--bg), transparent)' }} />
+        {/* Right fade */}
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 z-10 pointer-events-none"
+          style={{ background: 'linear-gradient(-90deg, var(--bg), transparent)' }} />
+
+        <div
+          ref={scrollRef}
+          className="flex gap-5 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-4 px-8 md:px-16"
+          style={{ cursor: 'grab' }}
+          onMouseDown={(e) => {
+            const el = scrollRef.current;
+            if (!el) return;
+            el.style.cursor = 'grabbing';
+            let startX = e.pageX - el.offsetLeft;
+            let scrollLeft = el.scrollLeft;
+            const onMove = (me: MouseEvent) => {
+              const x = me.pageX - el.offsetLeft;
+              el.scrollLeft = scrollLeft - (x - startX);
+            };
+            const onUp = () => {
+              el.style.cursor = 'grab';
+              document.removeEventListener('mousemove', onMove);
+              document.removeEventListener('mouseup', onUp);
+            };
+            document.addEventListener('mousemove', onMove);
+            document.addEventListener('mouseup', onUp);
+          }}
+        >
+          {PROJECTS.map((project, i) => (
+            <ProjectCard key={project.id} project={project} onClick={() => setSelected(project)} index={i} />
+          ))}
+          {/* Spacer */}
+          <div className="flex-shrink-0 w-4 md:w-12" />
+        </div>
       </div>
 
-      <motion.div
-        className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 pb-12"
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false }}
-      >
-         {SKILL_CATEGORIES.map((category, idx) => (
-             <motion.div key={idx} variants={itemVariants}>
-               <BlockCard className="h-full hover:scale-[1.01] transition-transform duration-300">
-                  <div className="flex items-center gap-3 mb-6 border-b-2 border-black pb-3 bg-voxel-dark/50 -mx-6 -mt-6 p-4">
-                     <div className={`w-3 h-3 ${idx % 3 === 0 ? 'bg-voxel-primary' : idx % 3 === 1 ? 'bg-voxel-secondary' : 'bg-voxel-accent'} border border-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.5)] animate-pulse`}></div>
-                     <h3 className="font-bold text-sm uppercase tracking-wider">{category.title}</h3>
-                  </div>
+      {/* Scroll hint */}
+      <Section>
+        <Reveal variants={FADE_IN}>
+          <div className="flex items-center gap-3 mt-6 text-[var(--text-3)]">
+            <div className="flex gap-1">
+              {PROJECTS.map((_, i) => (
+                <div key={i} className="w-1 h-1 rounded-full bg-current" />
+              ))}
+            </div>
+            <span className="font-body text-xs">Drag to explore</span>
+          </div>
+        </Reveal>
+      </Section>
 
-                  <div className="grid grid-cols-2 gap-4">
-                      {category.skills.map((skill, sIdx) => (
-                        <motion.div
-                          key={skill.name}
-                          whileHover={{ scale: 1.1, rotate: 2 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="flex flex-col items-center justify-center p-3 bg-voxel-bg border border-gray-700 hover:border-voxel-primary transition-colors gap-2 rounded-sm group cursor-pointer"
-                        >
-                           {skill.logo ? (
-                             <div className="w-10 h-10 relative flex items-center justify-center">
-                               <img
-                                 src={skill.logo}
-                                 alt={skill.name}
-                                 className={`max-w-full max-h-full object-contain ${skill.invert ? 'filter invert brightness-0' : ''}`}
-                               />
-                             </div>
-                           ) : (
-                             <div className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded">
-                                <span className="text-xs font-bold">{skill.name[0]}</span>
-                             </div>
-                           )}
-                           <span className="text-[10px] font-bold text-gray-300 text-center uppercase group-hover:text-voxel-primary transition-colors">{skill.name}</span>
-                        </motion.div>
-                      ))}
+      {/* Modal */}
+      <LuxModal
+        isOpen={!!selected}
+        onClose={() => setSelected(null)}
+        title={selected?.title}
+      >
+        {selected && (
+          <div>
+            {/* Tags */}
+            <div className="flex flex-wrap gap-2 mb-6">
+              {selected.tags.map(t => <Tag key={t}>{t}</Tag>)}
+            </div>
+
+            {/* Content grid */}
+            <div className="grid md:grid-cols-[1fr_200px] gap-8 mb-8">
+              <div>
+                <h4 className="font-display font-semibold text-[var(--text-3)] text-xs tracking-widest uppercase mb-3">Overview</h4>
+                <p className="font-body text-[var(--text-2)] leading-relaxed text-[15px]">
+                  {selected.fullDescription || selected.description}
+                </p>
+              </div>
+              {selected.techStack && (
+                <div>
+                  <h4 className="font-display font-semibold text-[var(--text-3)] text-xs tracking-widest uppercase mb-3">Tech Stack</h4>
+                  <div className="flex flex-col gap-2">
+                    {selected.techStack.map(t => (
+                      <div key={t} className="px-3 py-2 rounded-xl border border-white/[0.08] bg-white/[0.04] font-body text-sm text-[var(--text-2)]">
+                        {t}
+                      </div>
+                    ))}
                   </div>
-               </BlockCard>
-             </motion.div>
-         ))}
-      </motion.div>
-    </PageWrapper>
+                </div>
+              )}
+            </div>
+
+            <Divider className="mb-6" />
+
+            {/* Links */}
+            <div className="flex flex-wrap gap-3">
+              {selected.links.map(link => (
+                <LuxButton key={link.label} variant="secondary" size="sm" href={link.url} target="_blank">
+                  {link.label} <ArrowUpRight size={14} />
+                </LuxButton>
+              ))}
+            </div>
+          </div>
+        )}
+      </LuxModal>
+    </div>
   );
 };
 
-// Larger Social Button with slide effect
-interface SocialButtonProps {
-  href: string;
-  label: string;
-  icon: React.ElementType;
-}
+// ─────────────────────────────────────────────
+// SKILLS SECTION
+// ─────────────────────────────────────────────
 
-const SocialButton = ({ href, label, icon: Icon }: SocialButtonProps) => (
-  <motion.a
-    whileHover={{ x: 2, y: 2, boxShadow: 'none' }}
-    href={href} 
-    target="_blank" 
-    rel="noreferrer"
-    className="relative h-20 flex-1 min-w-[160px] bg-voxel-secondary border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-hidden group"
-  >
-    <span className="font-bold text-voxel-dark tracking-wider text-xl transition-transform duration-300 group-hover:-translate-y-20">
-      {label}
-    </span>
-    <div className="absolute inset-0 flex items-center justify-center translate-y-20 transition-transform duration-300 group-hover:translate-y-0 text-voxel-dark">
-      <Icon className="w-10 h-10" />
-    </div>
-  </motion.a>
+const SkillsSection: React.FC = () => (
+  <div className="py-28">
+    <Section>
+      <SectionLabel index="03" label="Skills" />
+
+      <SplitText
+        text="Technical Arsenal"
+        className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-16"
+      />
+
+      <div className="space-y-12">
+        {SKILL_CATEGORIES.map((cat, ci) => (
+          <motion.div
+            key={ci}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: '-50px' }}
+            transition={{ delay: ci * 0.06, duration: 0.7 }}
+          >
+            <div className="flex flex-col md:flex-row md:items-start gap-6 md:gap-12">
+              {/* Category label */}
+              <div className="md:w-48 flex-shrink-0 flex items-center gap-3">
+                <span className="font-body text-xs tracking-widest uppercase text-[var(--text-3)] font-semibold">
+                  {String(ci + 1).padStart(2, '0')}
+                </span>
+                <Divider className="hidden md:block flex-1 max-w-[30px]" />
+                <h3 className="font-display font-semibold text-sm text-white leading-tight">{cat.title}</h3>
+              </div>
+
+              {/* Skills */}
+              <div className="flex flex-wrap gap-3 flex-1">
+                {cat.skills.map((skill, si) => (
+                  <motion.div
+                    key={skill.name}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: false }}
+                    transition={{ delay: si * 0.04 + ci * 0.03, duration: 0.5, ease: [0.34, 1.56, 0.64, 1] }}
+                    whileHover={{ scale: 1.08, y: -2 }}
+                    className="flex items-center gap-2.5 px-4 py-2.5 rounded-xl border border-white/[0.08] bg-white/[0.04] hover:border-[rgba(41,151,255,0.3)] hover:bg-[rgba(41,151,255,0.06)] transition-all duration-200 cursor-default group"
+                  >
+                    {skill.logo ? (
+                      <img
+                        src={skill.logo}
+                        alt={skill.name}
+                        className={`w-4 h-4 object-contain ${skill.invert ? 'brightness-0 invert opacity-60 group-hover:opacity-90' : ''}`}
+                      />
+                    ) : (
+                      <Code2 size={14} className="text-[var(--text-3)]" />
+                    )}
+                    <span className="font-body text-sm text-[var(--text-2)] group-hover:text-white transition-colors">{skill.name}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            {ci < SKILL_CATEGORIES.length - 1 && <Divider className="mt-10" />}
+          </motion.div>
+        ))}
+      </div>
+    </Section>
+  </div>
 );
+
+// ─────────────────────────────────────────────
+// CONTACT SECTION
+// ─────────────────────────────────────────────
 
 const ContactSection: React.FC = () => (
-   <PageWrapper>
-      <div className="max-w-5xl mx-auto w-full">
-         <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">ESTABLISH CONNECTION</h2>
-            <p className="text-gray-400 font-mono">Initiate Handshake Protocol</p>
-         </div>
+  <div className="py-28">
+    <Section>
+      <SectionLabel index="04" label="Contact" />
 
-         <BlockCard title="TRANSMISSION_UPLINK" className="shadow-voxel-xl bg-voxel-card/90">
-             <div className="grid md:grid-cols-2 gap-12 p-2">
-                <div className="flex flex-col justify-between">
-                   <div>
-                       <p className="text-gray-400 mb-8 leading-relaxed font-mono text-sm border-l-2 border-voxel-primary pl-4">
-                          Currently listening for opportunities in <strong className="text-white">AI Engineering</strong>, <strong className="text-white">NLP</strong>, and <strong className="text-white">Computer Vision</strong>. 
-                          Send a ping, and I'll acknowledge the packet ASAP.
-                       </p>
-                       
-                       <div className="space-y-4">
-                          <a href="mailto:ragunathravi73@gmail.com" className="flex items-center gap-4 p-4 bg-voxel-bg border-2 border-transparent hover:border-voxel-primary transition-all group cursor-pointer hover:translate-x-2">
-                             <div className="w-12 h-12 bg-voxel-card flex items-center justify-center border border-gray-700 group-hover:bg-voxel-primary group-hover:text-black transition-colors">
-                                <Mail className="w-6 h-6" />
-                             </div>
-                             <div>
-                                <p className="text-xs text-gray-500 uppercase font-bold">Email Protocol</p>
-                                <p className="font-mono text-sm break-all font-bold">ragunathravi73@gmail.com</p>
-                             </div>
-                          </a>
+      <div className="grid lg:grid-cols-2 gap-16 items-start">
+        {/* Left */}
+        <div>
+          <SplitText
+            text="Let's build something remarkable."
+            className="font-display font-bold text-4xl md:text-5xl text-white leading-tight mb-8"
+          />
 
-                          <a href="https://wa.me/917825078508" target="_blank" rel="noreferrer" className="flex items-center gap-4 p-4 bg-voxel-bg border-2 border-transparent hover:border-voxel-accent transition-all group cursor-pointer hover:translate-x-2">
-                             <div className="w-12 h-12 bg-voxel-card flex items-center justify-center border border-gray-700 group-hover:bg-voxel-accent group-hover:text-black transition-colors">
-                                <span className="font-bold text-xl">✆</span>
-                             </div>
-                             <div>
-                                <p className="text-xs text-gray-500 uppercase font-bold">WhatsApp Channel</p>
-                                <p className="font-mono text-sm font-bold">+91 7825078508</p>
-                             </div>
-                          </a>
-                       </div>
-                   </div>
+          <Reveal variants={FADE_UP} delay={0.1}>
+            <p className="font-body text-base text-[var(--text-2)] leading-relaxed mb-10 max-w-sm">
+              I'm actively exploring opportunities in AI Engineering, NLP, and Computer Vision.
+              Whether it's a full-time role, research collaboration, or an interesting project —
+              let's connect.
+            </p>
+          </Reveal>
 
-                   <div className="flex flex-wrap gap-4 pt-8">
-                        <SocialButton href="https://www.linkedin.com/in/ragunath-r-a2a580247/" label="LINKEDIN" icon={Linkedin} />
-                        <SocialButton href="https://huggingface.co/ragunath-ravi" label="HUGGINGFACE" icon={Brain} />
-                        <SocialButton href="https://github.com/Ragu-123" label="GITHUB" icon={Github} />
-                        <SocialButton href="https://drive.google.com/file/d/1kM5NYSvwx1H__plrrWiPP9M2tsTT2IlU/view?usp=sharing" label="RESUME" icon={FileText} />
-                   </div>
+          {/* Direct contact */}
+          <RevealGroup className="space-y-3 mb-12">
+            {[
+              { icon: <Mail size={18} />, label: 'Email', value: 'ragunathravi73@gmail.com', href: 'mailto:ragunathravi73@gmail.com' },
+              { icon: <span className="text-base">✆</span>, label: 'WhatsApp', value: '+91 7825078508', href: 'https://wa.me/917825078508' },
+            ].map(item => (
+              <motion.a
+                key={item.label}
+                variants={FADE_UP}
+                href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                className="flex items-center gap-4 p-4 rounded-xl border border-white/[0.07] bg-white/[0.03] hover:border-[rgba(41,151,255,0.3)] hover:bg-[rgba(41,151,255,0.05)] transition-all duration-200 group"
+              >
+                <div className="w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center text-[var(--text-3)] group-hover:text-[#2997ff] transition-colors">
+                  {item.icon}
                 </div>
-
-                <div className="bg-voxel-bg p-6 border-2 border-black relative mt-8 md:mt-0">
-                   <div className="absolute -top-3 -right-3 bg-voxel-danger text-white text-xs font-bold px-2 py-1 border border-black transform rotate-12 shadow-sm animate-pulse">
-                      LIVE FEED
-                   </div>
-                   <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
-                      <div>
-                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Source Identity</label>
-                         <BlockInput placeholder="Your Name" />
-                      </div>
-                      <div>
-                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Return Address (Email)</label>
-                         <BlockInput type="email" placeholder="email@domain.com" />
-                      </div>
-                      <div>
-                         <label className="block text-xs font-bold uppercase mb-2 text-gray-500">Data Payload</label>
-                         <BlockTextArea rows={4} placeholder="Type your message..." />
-                      </div>
-                      <BlockButton type="submit" className="w-full" variant="primary">
-                         TRANSMIT DATA
-                      </BlockButton>
-                   </form>
+                <div>
+                  <p className="font-body text-[10px] tracking-widest uppercase text-[var(--text-3)] mb-0.5">{item.label}</p>
+                  <p className="font-display font-medium text-sm text-white">{item.value}</p>
                 </div>
-             </div>
-         </BlockCard>
+                <ArrowUpRight size={16} className="ml-auto text-[var(--text-3)] group-hover:text-[#2997ff] transition-colors" />
+              </motion.a>
+            ))}
+          </RevealGroup>
+
+          {/* Social links */}
+          <Reveal variants={FADE_UP} delay={0.3}>
+            <div className="flex flex-wrap gap-3">
+              {[
+                { icon: <Linkedin size={18} />, label: 'LinkedIn', href: 'https://www.linkedin.com/in/ragunath-r-a2a580247/' },
+                { icon: <Github size={18} />, label: 'GitHub', href: 'https://github.com/Ragu-123' },
+                { icon: <Brain size={18} />, label: 'HuggingFace', href: 'https://huggingface.co/ragunath-ravi' },
+                { icon: <FileText size={18} />, label: 'Resume', href: 'https://drive.google.com/file/d/1kM5NYSvwx1H__plrrWiPP9M2tsTT2IlU/view?usp=sharing' },
+              ].map(s => (
+                <Magnetic key={s.label} strength={0.3}>
+                  <a
+                    href={s.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-white/[0.1] bg-white/[0.04] hover:border-white/[0.2] hover:bg-white/[0.08] text-[var(--text-2)] hover:text-white transition-all font-body text-sm"
+                  >
+                    {s.icon} {s.label}
+                  </a>
+                </Magnetic>
+              ))}
+            </div>
+          </Reveal>
+        </div>
+
+        {/* Right — Form */}
+        <Reveal variants={SCALE_IN} delay={0.15}>
+          <div className="rounded-2xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl p-8">
+            <h3 className="font-display font-bold text-xl text-white mb-6">Send a message</h3>
+            <form className="space-y-4" onSubmit={e => e.preventDefault()}>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block font-body text-xs text-[var(--text-3)] uppercase tracking-widest mb-2">Name</label>
+                  <LuxInput placeholder="Your name" />
+                </div>
+                <div>
+                  <label className="block font-body text-xs text-[var(--text-3)] uppercase tracking-widest mb-2">Email</label>
+                  <LuxInput type="email" placeholder="you@example.com" />
+                </div>
+              </div>
+              <div>
+                <label className="block font-body text-xs text-[var(--text-3)] uppercase tracking-widest mb-2">Subject</label>
+                <LuxInput placeholder="What's this about?" />
+              </div>
+              <div>
+                <label className="block font-body text-xs text-[var(--text-3)] uppercase tracking-widest mb-2">Message</label>
+                <LuxTextArea rows={5} placeholder="Tell me about your project or opportunity..." />
+              </div>
+              <LuxButton type="submit" size="lg" className="w-full mt-2">
+                Send Message <ArrowRight size={18} />
+              </LuxButton>
+            </form>
+          </div>
+        </Reveal>
       </div>
-   </PageWrapper>
+    </Section>
+  </div>
 );
 
-function App() {
+// ─────────────────────────────────────────────
+// APP ROOT
+// ─────────────────────────────────────────────
+
+export default function App() {
   const [activePage, setActivePage] = useState('home');
 
   return (
     <>
       <VoxelScene />
       <Layout activePage={activePage} onNavigate={setActivePage}>
-        {activePage === 'home' && <HeroSection onNavigate={setActivePage} />}
-        {activePage === 'about' && <AboutSection />}
+        {activePage === 'home'     && <HeroSection onNavigate={setActivePage} />}
+        {activePage === 'about'    && <AboutSection />}
         {activePage === 'projects' && <ProjectsSection />}
-        {activePage === 'skills' && <SkillsSection />}
-        {activePage === 'contact' && <ContactSection />}
+        {activePage === 'skills'   && <SkillsSection />}
+        {activePage === 'contact'  && <ContactSection />}
       </Layout>
     </>
   );
 }
-
-export default App;
