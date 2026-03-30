@@ -14,19 +14,19 @@ export const BlockButton: React.FC<VoxelButtonProps> = ({
   target
 }) => {
   
-  const baseStyles = "relative font-bold uppercase transition-all duration-100 ease-in-out active:translate-y-[4px] active:shadow-none border-2 border-black inline-flex items-center justify-center cursor-pointer select-none";
+  const baseStyles = "relative font-body font-semibold uppercase tracking-wider transition-all duration-300 ease-in-out hover:-translate-y-1 inline-flex items-center justify-center cursor-pointer select-none rounded-lg border shadow-sm";
   
   const sizeStyles = {
-    sm: "px-3 py-1 text-xs shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] active:translate-y-[2px]",
-    md: "px-6 py-3 text-sm shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]",
-    lg: "px-8 py-4 text-lg shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] active:translate-y-[6px]",
+    sm: "px-4 py-2 text-xs",
+    md: "px-6 py-3 text-sm",
+    lg: "px-8 py-4 text-base",
   };
 
   const variantStyles = {
-    primary: "bg-voxel-primary text-voxel-dark hover:bg-blue-400",
-    secondary: "bg-voxel-secondary text-voxel-dark hover:bg-purple-300",
-    accent: "bg-voxel-accent text-voxel-dark hover:bg-green-300",
-    danger: "bg-voxel-danger text-white hover:bg-red-400",
+    primary: "bg-primary text-on-primary border-primary hover:bg-opacity-90",
+    secondary: "bg-surface text-primary border-outline hover:border-primary",
+    accent: "bg-secondary text-on-primary border-secondary hover:bg-opacity-90",
+    danger: "bg-red-700 text-white border-red-800 hover:bg-red-800",
   };
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
@@ -50,14 +50,10 @@ export const BlockButton: React.FC<VoxelButtonProps> = ({
 
 export const BlockCard: React.FC<VoxelCardProps> = ({ children, className = '', title, onClick }) => {
   return (
-    <TiltCard onClick={onClick} className={`relative bg-voxel-card border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,0.5)] p-0 h-full ${className}`}>
+    <TiltCard onClick={onClick} className={`relative bg-surface border border-outline rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-0 h-full ${className}`}>
       {title && (
-        <div className="bg-voxel-primary border-b-2 border-black p-3 flex items-center justify-between">
-          <h3 className="font-bold text-voxel-dark uppercase tracking-widest text-sm truncate pr-2">{title}</h3>
-          <div className="flex gap-2 shrink-0">
-            <div className="w-3 h-3 bg-voxel-danger border border-black"></div>
-            <div className="w-3 h-3 bg-voxel-accent border border-black"></div>
-          </div>
+        <div className="bg-surface-container border-b border-outline p-4 rounded-t-xl">
+          <h3 className="font-headline font-semibold text-primary tracking-wide text-lg truncate">{title}</h3>
         </div>
       )}
       <div className="p-6 h-full flex flex-col">
@@ -71,7 +67,7 @@ export const BlockInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> =
   return (
     <input 
       {...props}
-      className={`w-full bg-voxel-bg border-2 border-black p-3 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] focus:outline-none focus:shadow-[2px_2px_0px_0px_rgba(122,162,247,1)] focus:translate-y-[2px] focus:translate-x-[2px] transition-all placeholder-gray-500 ${props.className}`}
+      className={`w-full bg-surface-container border border-outline rounded-lg p-3 text-on-background shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-gray-500 font-body ${props.className}`}
     />
   );
 };
@@ -80,7 +76,7 @@ export const BlockTextArea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaEl
   return (
     <textarea 
       {...props}
-      className={`w-full bg-voxel-bg border-2 border-black p-3 text-white shadow-[4px_4px_0px_0px_rgba(0,0,0,0.5)] focus:outline-none focus:shadow-[2px_2px_0px_0px_rgba(122,162,247,1)] focus:translate-y-[2px] focus:translate-x-[2px] transition-all placeholder-gray-500 ${props.className}`}
+      className={`w-full bg-surface-container border border-outline rounded-lg p-3 text-on-background shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-gray-500 font-body ${props.className}`}
     />
   );
 };
@@ -96,13 +92,13 @@ export const BlockModal = ({ isOpen, onClose, children, title }: BlockModalProps
     if (!isOpen) return null;
   
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
-        <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto">
-          <div className="bg-voxel-card border-2 border-black shadow-voxel-xl">
-             <div className="bg-voxel-primary border-b-2 border-black p-4 flex items-center justify-between sticky top-0 z-10">
-                <h3 className="font-bold text-voxel-dark uppercase tracking-widest text-lg">{title || "Details"}</h3>
-                <button onClick={onClose} className="hover:bg-black/10 p-1 rounded transition-colors">
-                  <X className="w-6 h-6 text-voxel-dark" />
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+        <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl">
+          <div className="bg-surface border border-outline rounded-xl">
+             <div className="bg-surface-container border-b border-outline p-4 flex items-center justify-between sticky top-0 z-10 rounded-t-xl">
+                <h3 className="font-headline font-semibold text-primary tracking-wide text-xl">{title || "Details"}</h3>
+                <button onClick={onClose} className="hover:bg-outline/30 p-1 rounded-full transition-colors text-secondary">
+                  <X className="w-6 h-6" />
                 </button>
              </div>
              <div className="p-8">
@@ -117,16 +113,15 @@ export const BlockModal = ({ isOpen, onClose, children, title }: BlockModalProps
 export const BlockProgressBar: React.FC<{ label: string; progress: number }> = ({ label, progress }) => {
   return (
     <div className="mb-3">
-      <div className="flex justify-between text-xs font-bold text-gray-400 mb-1 font-mono uppercase">
+      <div className="flex justify-between text-sm font-semibold text-secondary mb-2 font-body">
         <span>{label}</span>
-        <span>{progress}% Confidence</span>
+        <span>{progress}%</span>
       </div>
-      <div className="h-4 bg-voxel-dark border border-gray-700 p-0.5 relative">
+      <div className="h-2 bg-surface-container rounded-full overflow-hidden border border-outline/50">
         <div 
-          className="h-full bg-voxel-accent relative overflow-hidden" 
+          className="h-full bg-primary relative transition-all duration-1000 ease-out"
           style={{ width: `${progress}%` }}
         >
-           <div className="absolute inset-0 bg-[url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAIklEQVQIW2NkQAKrVq36zwjjgzjwqgOx4Wy4IsYCEEmzAQkAlQwZ+Bw6iN4AAAAASUVORK5CYII=')] opacity-20"></div>
         </div>
       </div>
     </div>

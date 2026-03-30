@@ -159,7 +159,7 @@ export const SpotlightCard: React.FC<{ children: React.ReactNode; className?: st
 
     return (
         <div
-            className={`group relative border border-gray-800 bg-gray-900 overflow-hidden ${className}`}
+            className={`group relative border border-outline bg-surface rounded-xl overflow-hidden ${className}`}
             onMouseMove={handleMouseMove}
             onClick={onClick}
         >
@@ -185,10 +185,10 @@ export const GlitchText: React.FC<{ text: string; className?: string }> = ({ tex
   return (
     <div className={`relative group inline-block ${className}`}>
       <span className="relative z-10">{text}</span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-red-500 opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 animate-pulse">
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-primary opacity-0 group-hover:opacity-70 group-hover:translate-x-[2px] transition-all duration-100 animate-pulse">
         {text}
       </span>
-      <span className="absolute top-0 left-0 -z-10 w-full h-full text-blue-500 opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 animate-pulse delay-75">
+      <span className="absolute top-0 left-0 -z-10 w-full h-full text-secondary opacity-0 group-hover:opacity-70 group-hover:-translate-x-[2px] transition-all duration-100 animate-pulse delay-75">
         {text}
       </span>
     </div>
