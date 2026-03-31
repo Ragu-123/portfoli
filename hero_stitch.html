@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "secondary-fixed": "#dfe3e8",
+              "on-primary-container": "#e7ebff",
+              "on-surface": "#1b1c1d",
+              "surface-tint": "#2259bf",
+              "on-secondary-fixed": "#171c20",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "surface-container-high": "#e9e8e9",
+              "background": "#faf9fa",
+              "inverse-surface": "#303031",
+              "secondary-fixed-dim": "#c2c7cc",
+              "on-error": "#ffffff",
+              "secondary-container": "#dfe3e8",
+              "primary-container": "#3366cc",
+              "on-secondary-container": "#606569",
+              "surface-bright": "#faf9fa",
+              "outline-variant": "#c3c6d5",
+              "surface-container-highest": "#e3e2e3",
+              "on-tertiary-container": "#4a3f00",
+              "on-primary-fixed-variant": "#00419d",
+              "tertiary-fixed-dim": "#dcc661",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#f9e37a",
+              "error-container": "#ffdad6",
+              "surface": "#faf9fa",
+              "on-tertiary": "#ffffff",
+              "primary": "#094cb2",
+              "tertiary": "#6d5e00",
+              "tertiary-container": "#bfab49",
+              "on-tertiary-fixed-variant": "#524600",
+              "on-primary-fixed": "#001946",
+              "on-tertiary-fixed": "#211b00",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#efedee",
+              "inverse-primary": "#b1c5ff",
+              "surface-variant": "#e3e2e3",
+              "primary-fixed-dim": "#b1c5ff",
+              "surface-container-low": "#f5f3f4",
+              "on-secondary-fixed-variant": "#42474b",
+              "inverse-on-surface": "#f2f0f1",
+              "surface-dim": "#dbdadb",
+              "primary-fixed": "#d9e2ff",
+              "outline": "#737784",
+              "secondary": "#5a5f63",
+              "on-surface-variant": "#434653",
+              "on-background": "#1b1c1d",
+              "on-primary": "#ffffff"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif", "serif"],
+              "body": ["Inter", "sans-serif"],
+              "label": ["Public Sans", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .serif-dropcap::first-letter {
+            float: left;
+            font-size: 4rem;
+            line-height: 0.8;
+            padding-top: 4px;
+            padding-right: 8px;
+            font-family: 'Noto Serif', serif;
+        }
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="sticky top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md">
+<div class="flex justify-between items-center px-12 py-6 max-w-screen-2xl mx-auto">
+<div class="font-serif text-2xl font-bold text-slate-900 dark:text-slate-50">Alexandria AI</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="font-serif text-lg tracking-tight text-blue-700 dark:text-blue-400 border-b border-blue-700/30 pb-1 transition-all duration-300 ease-out hover:opacity-80 scale-100 active:scale-95 transition-transform" href="#">Models</a>
+<a class="font-serif text-lg tracking-tight text-slate-500 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-300 ease-out hover:opacity-80 scale-100 active:scale-95 transition-transform" href="#">Datasets</a>
+<a class="font-serif text-lg tracking-tight text-slate-500 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-300 ease-out hover:opacity-80 scale-100 active:scale-95 transition-transform" href="#">Research</a>
+<a class="font-serif text-lg tracking-tight text-slate-500 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-300 transition-all duration-300 ease-out hover:opacity-80 scale-100 active:scale-95 transition-transform" href="#">Architectures</a>
+</div>
+<div class="flex items-center space-x-6">
+<div class="relative hidden lg:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-sm">search</span>
+<input class="bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-1 focus:ring-primary w-48 font-label" placeholder="Search index..." type="text"/>
+</div>
+<button class="bg-gradient-to-r from-primary to-primary-container text-on-primary px-6 py-2 rounded-full font-label text-sm font-semibold transition-all duration-300 hover:shadow-lg active:scale-95">
+                    Contact
+                </button>
+</div>
+</div>
+</nav>
+<main class="max-w-screen-2xl mx-auto px-12 py-16">
+<!-- Hero Section -->
+<header class="mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+<div class="lg:col-span-8">
+<div class="flex items-center space-x-4 mb-6">
+<span class="h-[1px] w-12 bg-tertiary"></span>
+<span class="font-label text-xs uppercase tracking-[0.2em] text-tertiary font-semibold">Model Registry 2024.v2</span>
+</div>
+<h1 class="font-headline text-6xl md:text-8xl leading-[1.1] mb-8 tracking-tight">The Library of Latent Intelligence.</h1>
+<p class="font-body text-xl text-on-surface-variant max-w-2xl leading-relaxed serif-dropcap">
+                    An curated collection of neural architectures developed at Alexandria Research. From high-dimensional transformers to adaptive reinforcement agents, our models are documented with mathematical rigor and performance transparency.
+                </p>
+</div>
+<div class="lg:col-span-4 pb-4">
+<div class="bg-surface-container-low p-8 rounded-xl">
+<div class="flex justify-between items-center mb-4">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">Total Parameters Hosted</span>
+<span class="material-symbols-outlined text-primary text-xl">database</span>
+</div>
+<div class="font-headline text-4xl font-bold text-primary">1.42T</div>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-xs font-label">
+<span class="text-on-surface-variant">Active Instances</span>
+<span class="text-on-surface font-semibold">42</span>
+</div>
+<div class="w-full bg-outline-variant/30 h-1 rounded-full">
+<div class="bg-primary w-3/4 h-full rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Model Grid: Bento Style -->
+<section class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- Featured Model: Transformer -->
+<article class="md:col-span-8 bg-surface-container-lowest overflow-hidden group">
+<div class="aspect-[21/9] w-full relative overflow-hidden">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="abstract visualization of neural network pathways with blue and gold flowing lines on a dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByendpTaT0dSwoJCFkhrySw6Z48jbv2KR9vsLbZ8VNATFH9n2Ua72vkgt7__D5qjlnTgjbiiT_VNSsVHty4kvlkBx9XED09vGRUISmd3EePmmWe3F6b02djk3Bzyi4syKcpGDAOxsTmcTgrYdyliq1-vvcroa_g2cAkvEfwBBRPSADSmik8FaQNjF03LwH6eujribxpd-cvHjGXvCkkvIWSmMDW9e2RhqaUsLBoo1R4XsbFUYuvJfDQItQnsQnPpW2Zfr4zzM3HbXS"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent"></div>
+<div class="absolute top-6 left-6">
+<span class="bg-tertiary text-on-tertiary px-3 py-1 text-[10px] font-label font-bold uppercase tracking-widest rounded-sm">Flagship Architecture</span>
+</div>
+</div>
+<div class="p-10">
+<div class="flex flex-col md:flex-row md:items-start justify-between gap-6">
+<div class="max-w-xl">
+<h2 class="font-headline text-4xl mb-4 group-hover:text-primary transition-colors">Aletheia-70B: Sparse MoE</h2>
+<p class="text-on-surface-variant leading-relaxed font-body mb-6">
+                                A sparse Mixture-of-Experts transformer optimized for long-context retrieval and ethical reasoning. Built on the proprietary Alexandria instruction set.
+                            </p>
+<div class="flex flex-wrap gap-3">
+<span class="bg-surface-container-high px-3 py-1 text-[11px] font-label text-on-secondary-container">LLM</span>
+<span class="bg-surface-container-high px-3 py-1 text-[11px] font-label text-on-secondary-container">70B Parameters</span>
+<span class="bg-surface-container-high px-3 py-1 text-[11px] font-label text-on-secondary-container">128k Context</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-4 min-w-[140px]">
+<div class="text-right">
+<div class="text-[10px] font-label text-outline uppercase tracking-tighter">MMLU Score</div>
+<div class="text-2xl font-headline font-bold text-primary">84.2%</div>
+</div>
+<a class="inline-flex items-center space-x-2 text-primary font-label text-sm font-semibold hover:underline underline-offset-8 transition-all" href="#">
+<span>Read Monograph</span>
+<span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</article>
+<!-- Side Card: Vision Model -->
+<article class="md:col-span-4 bg-surface-dim/30 p-8 flex flex-col justify-between group">
+<div>
+<div class="mb-8 overflow-hidden rounded-lg aspect-square">
+<img class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="microscopic view of high-tech digital circuitry with cool cyan lighting and bokeh effects" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDE13OQuUbv2kq6YjoP551Sqypuz6vP6iGp1N0HxWrkr-D2Nwyh2JcwUunNjJk3I_WTA_FyRFyfXzIkAsgMBjcF_qlbzgjkJXGNSNnvg-ZALD7nZfhRs-1YUTnTVgeKyNc-AqROktB3DZFajFNpjMGvLzN0mCw7zDt21UXdquj5Nj558lDzHNRV2NTQYvhA5EIWDO2sbeMlM3F3EyUA5ADROs6Yure8EyR7L2xP6OfvKFXsFG4Zp3lg14Pq8l9BFdPaTiZLYLh31hJ4"/>
+</div>
+<h3 class="font-headline text-2xl mb-3">Ocular-V3</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-6">
+                        Advanced CNN with spatial attention mechanisms for real-time pathology detection and astronomical image synthesis.
+                    </p>
+</div>
+<div>
+<div class="flex justify-between items-center border-t border-outline-variant/20 pt-6">
+<span class="font-label text-[10px] uppercase font-bold text-tertiary">Computer Vision</span>
+<a class="text-primary hover:opacity-70 transition-opacity" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Reinforcement Agent -->
+<article class="md:col-span-4 bg-surface-container-low p-8 group">
+<span class="font-label text-[10px] text-outline mb-4 block tracking-widest uppercase">RL Agent</span>
+<h3 class="font-headline text-2xl mb-4 group-hover:text-primary transition-colors">Sisyphus-Delta</h3>
+<p class="text-sm text-on-surface-variant font-body leading-relaxed mb-8">
+                    Continuous control agent using Proximal Policy Optimization for high-frequency algorithmic trading and logistics optimization.
+                </p>
+<div class="space-y-4">
+<div class="flex justify-between text-xs">
+<span class="text-outline">Efficiency</span>
+<span class="font-bold text-on-surface">99.4%</span>
+</div>
+<div class="h-1 bg-outline-variant/20 w-full overflow-hidden">
+<div class="bg-primary-container h-full w-[99%]"></div>
+</div>
+<a class="block pt-4 font-label text-xs font-bold text-primary uppercase tracking-widest hover:underline underline-offset-4" href="#">Open Report</a>
+</div>
+</article>
+<!-- Research Paper Style Card -->
+<article class="md:col-span-8 bg-surface-container-lowest border-l-4 border-tertiary/20 p-10 flex flex-col md:flex-row gap-10">
+<div class="flex-1">
+<div class="flex items-center space-x-2 mb-4">
+<span class="material-symbols-outlined text-tertiary text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="font-label text-xs font-semibold text-tertiary tracking-widest uppercase">Experimental Architecture</span>
+</div>
+<h3 class="font-headline text-3xl mb-4">Mnemosyne Diffusion</h3>
+<p class="font-body text-on-surface-variant leading-relaxed mb-6 italic">
+                        "A temporal latent diffusion model for long-form video synthesis with consistent entity persistence across non-linear time frames."
+                    </p>
+<div class="grid grid-cols-2 gap-8 mb-6">
+<div>
+<div class="text-[10px] font-label text-outline uppercase">Training VRAM</div>
+<div class="text-xl font-headline font-semibold">1.2TB H100</div>
+</div>
+<div>
+<div class="text-[10px] font-label text-outline uppercase">Latency (per frame)</div>
+<div class="text-xl font-headline font-semibold">14ms</div>
+</div>
+</div>
+</div>
+<div class="w-full md:w-48 flex-shrink-0">
+<div class="aspect-[3/4] bg-surface-container-high relative overflow-hidden flex flex-col p-4 shadow-sm border border-outline-variant/10">
+<div class="w-full h-full flex flex-col justify-between border border-outline-variant/20 p-2">
+<div class="h-1 bg-outline-variant/30 w-1/2"></div>
+<div class="space-y-1">
+<div class="h-0.5 bg-outline-variant/20 w-full"></div>
+<div class="h-0.5 bg-outline-variant/20 w-full"></div>
+<div class="h-0.5 bg-outline-variant/20 w-3/4"></div>
+</div>
+<div class="text-[8px] font-serif text-outline italic">Fig 1.2 Latent Trajectory</div>
+</div>
+<div class="absolute inset-0 hover:bg-primary/5 cursor-pointer transition-colors flex items-center justify-center opacity-0 hover:opacity-100">
+<span class="material-symbols-outlined text-primary text-3xl">visibility</span>
+</div>
+</div>
+</div>
+</article>
+</section>
+<!-- Newsletter / Contact -->
+<section class="mt-32 border-t-2 border-primary/10 pt-16 mb-16">
+<div class="max-w-3xl mx-auto text-center">
+<h2 class="font-headline text-4xl mb-6 italic">Join the Peer-Review Council.</h2>
+<p class="font-body text-on-surface-variant mb-10 leading-relaxed">
+                    Receive weekly briefs on new architectural weights, technical papers, and ethical benchmarks from the Alexandria lab.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4">
+<input class="flex-1 bg-surface-container-lowest border-outline-variant/20 rounded-sm px-6 py-4 font-label focus:ring-primary focus:border-primary" placeholder="academic@institution.edu" type="email"/>
+<button class="bg-primary text-on-primary px-10 py-4 font-label font-bold uppercase tracking-widest text-sm hover:bg-primary-container transition-colors">
+                        Subscribe
+                    </button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full mt-auto bg-slate-50 dark:bg-slate-900 border-t border-slate-200/10">
+<div class="flex flex-col md:flex-row justify-between items-center px-12 py-16 max-w-screen-2xl mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="font-serif text-xl font-semibold text-slate-800 dark:text-slate-200 mb-2">Alexandria AI</div>
+<p class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500">© 2024 Alexandria AI Research. All rights reserved.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:underline underline-offset-4 decoration-blue-700/40 opacity-100 hover:opacity-70 transition-opacity" href="#">Documentation</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:underline underline-offset-4 decoration-blue-700/40 opacity-100 hover:opacity-70 transition-opacity" href="#">GitHub</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:underline underline-offset-4 decoration-blue-700/40 opacity-100 hover:opacity-70 transition-opacity" href="#">arXiv</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:underline underline-offset-4 decoration-blue-700/40 opacity-100 hover:opacity-70 transition-opacity" href="#">Privacy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:underline underline-offset-4 decoration-blue-700/40 opacity-100 hover:opacity-70 transition-opacity" href="#">Terms</a>
+</div>
+</div>
+</footer>
+</body></html>

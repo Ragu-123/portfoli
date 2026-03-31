@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Alexandria | Flagship Architectures &amp; Models</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&amp;family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@300;400;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "on-secondary-fixed": "#171c20",
+              "on-secondary-container": "#606569",
+              "on-secondary": "#ffffff",
+              "secondary": "#5a5f63",
+              "on-primary-fixed": "#001946",
+              "surface-bright": "#faf9fa",
+              "tertiary-fixed": "#f9e37a",
+              "secondary-fixed-dim": "#c2c7cc",
+              "on-secondary-fixed-variant": "#42474b",
+              "on-primary-fixed-variant": "#00419d",
+              "surface-tint": "#2259bf",
+              "surface-container-high": "#e9e8e9",
+              "on-surface-variant": "#434653",
+              "inverse-on-surface": "#f2f0f1",
+              "primary-container": "#3366cc",
+              "secondary-fixed": "#dfe3e8",
+              "tertiary": "#6d5e00",
+              "outline": "#737784",
+              "on-surface": "#1b1c1d",
+              "surface-variant": "#e3e2e3",
+              "surface-container": "#efedee",
+              "background": "#faf9fa",
+              "primary-fixed-dim": "#b1c5ff",
+              "outline-variant": "#c3c6d5",
+              "surface-container-lowest": "#ffffff",
+              "surface-dim": "#dbdadb",
+              "surface-container-low": "#f5f3f4",
+              "primary-fixed": "#d9e2ff",
+              "on-tertiary-container": "#4a3f00",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#303031",
+              "on-tertiary": "#ffffff",
+              "surface": "#faf9fa",
+              "on-tertiary-fixed": "#211b00",
+              "tertiary-container": "#bfab49",
+              "tertiary-fixed-dim": "#dcc661",
+              "on-error": "#ffffff",
+              "on-primary-container": "#e7ebff",
+              "error-container": "#ffdad6",
+              "surface-container-highest": "#e3e2e3",
+              "inverse-primary": "#b1c5ff",
+              "on-error-container": "#93000a",
+              "on-background": "#1b1c1d",
+              "error": "#ba1a1a",
+              "secondary-container": "#dfe3e8",
+              "primary": "#094cb2",
+              "on-tertiary-fixed-variant": "#524600"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .tonal-shift-bg { background-color: #efedee; }
+        .glass-nav { backdrop-filter: blur(20px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="max-w-7xl mx-auto px-8 h-20 flex items-center justify-between">
+<div class="font-serif font-bold text-2xl tracking-tighter text-slate-900 dark:text-slate-50 uppercase">ALEXANDRIA</div>
+<div class="hidden md:flex items-center space-x-12">
+<a class="font-serif text-lg tracking-tight text-[#094cb2] dark:text-blue-400 border-b-2 border-[#094cb2] pb-1" href="#">Architectures</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors" href="#">Datasets</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors" href="#">Research</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 transition-colors" href="#">About</a>
+</div>
+<div class="flex items-center space-x-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer" data-icon="search">search</span>
+<button class="bg-primary text-on-primary px-6 py-2 font-label text-sm uppercase tracking-widest rounded-lg hover:bg-primary-container transition-colors duration-300">Contact</button>
+</div>
+</div>
+</nav>
+<main class="pt-32 pb-20">
+<!-- Hero Section: Flagship Overview -->
+<section class="max-w-7xl mx-auto px-8 mb-24">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-end">
+<div class="lg:col-span-8">
+<span class="font-label text-xs uppercase tracking-[0.3em] text-tertiary font-semibold mb-6 block">State of the Art — 2024</span>
+<h1 class="font-headline text-6xl md:text-8xl leading-tight mb-8 text-on-surface">Flagship Architectures &amp; Neural Geometries</h1>
+<p class="font-body text-xl text-on-surface-variant max-w-2xl leading-relaxed">
+                        An exhaustive review of high-parameter sparse Mixture of Experts (MoE) and the emerging topological structures of next-generation intelligence.
+                    </p>
+</div>
+<div class="lg:col-span-4 flex justify-end">
+<div class="text-right">
+<div class="font-headline text-4xl text-primary font-bold">1.8T</div>
+<div class="font-label text-xs uppercase tracking-widest text-secondary mb-4">Peak Parameter Count</div>
+<div class="font-headline text-4xl text-primary font-bold">&lt;12ms</div>
+<div class="font-label text-xs uppercase tracking-widest text-secondary">Inference Latency Target</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Spotlight: Sparse MoE -->
+<section class="max-w-7xl mx-auto px-8 mb-32">
+<div class="bg-surface-container-low p-12 lg:p-20 rounded-xl relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/2 h-full opacity-10 pointer-events-none">
+<img class="w-full h-full object-cover grayscale" data-alt="abstract mathematical visualization of interconnected nodes and complex geometric neural pathways in white and light grey tones" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-iHw6o0xuiOinM2auy3s16tYO35VaPFCHsga84W-2XkyqDJMfvE62xQpuWImxoc0dfLoQlhL_VJDWSOLZm1ukiZd4yRS5-kJgYcc_5u9IXrXKOT6lffqKpJpkyIXyCA585qn21W-44eyTqMRpMjsjc_0coJ7GEPTMAFHHvYdwETd1SjkFFinQG6Dbug7y_RhrDm6_eNq-6XxH8Hb9Zsb1SXMTpf6tp_dY584jcDZwahtOtFi1wiq_SVw4AgoVia8xM8cIOYEPBKee"/>
+</div>
+<div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16">
+<div>
+<h2 class="font-headline text-4xl mb-8">The MoE Paradigm Shift</h2>
+<div class="space-y-6 font-body text-lg text-on-surface-variant leading-relaxed">
+<p>Sparse Mixture-of-Experts (MoE) represents a fundamental departure from monolithic dense models. By activating only a fraction of the network for any given token, we achieve unparalleled efficiency without sacrificing world-knowledge depth.</p>
+<p>The Alexandria flagship models utilize a Top-2 Gating mechanism, ensuring local coherence while maintaining global routing stability across 128 specialized experts.</p>
+</div>
+<div class="mt-12 grid grid-cols-2 gap-8">
+<div class="border-l-2 border-primary-container pl-6">
+<div class="font-headline text-2xl mb-1">94.2%</div>
+<div class="font-label text-xs uppercase tracking-widest text-secondary">Expert Specialization Score</div>
+</div>
+<div class="border-l-2 border-primary-container pl-6">
+<div class="font-headline text-2xl mb-1">0.8B</div>
+<div class="font-label text-xs uppercase tracking-widest text-secondary">Active Params/Token</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col justify-center">
+<div class="bg-surface-container-lowest p-8 rounded-lg shadow-sm border border-outline-variant/15">
+<h3 class="font-label text-sm uppercase tracking-widest text-tertiary mb-6">Internal Architecture Stack</h3>
+<ul class="space-y-4">
+<li class="flex justify-between items-center pb-4 border-b border-surface-variant">
+<span class="font-body text-sm font-medium">Attention Mechanism</span>
+<span class="font-label text-xs bg-secondary-container px-3 py-1 rounded">FlashAttention-3</span>
+</li>
+<li class="flex justify-between items-center pb-4 border-b border-surface-variant">
+<span class="font-body text-sm font-medium">Positional Encoding</span>
+<span class="font-label text-xs bg-secondary-container px-3 py-1 rounded">RoPE (Rotary)</span>
+</li>
+<li class="flex justify-between items-center pb-4 border-b border-surface-variant">
+<span class="font-body text-sm font-medium">Expert Routing</span>
+<span class="font-label text-xs bg-secondary-container px-3 py-1 rounded">Sinkhorn Gating</span>
+</li>
+<li class="flex justify-between items-center">
+<span class="font-body text-sm font-medium">Context Window</span>
+<span class="font-label text-xs bg-primary-container text-white px-3 py-1 rounded">2M Tokens</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Bento Grid: Model Catalog -->
+<section class="max-w-7xl mx-auto px-8 mb-32">
+<div class="flex justify-between items-end mb-12">
+<div>
+<h2 class="font-headline text-4xl mb-2">Model Archetypes</h2>
+<p class="font-body text-on-surface-variant">Specialized variants for diverse computational constraints.</p>
+</div>
+<div class="flex space-x-4">
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<button class="w-12 h-12 rounded-full border border-outline-variant flex items-center justify-center hover:bg-surface-container transition-colors text-primary">
+<span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="md:col-span-2 bg-surface-container-high rounded-xl p-8 flex flex-col justify-between aspect-video lg:aspect-auto">
+<div>
+<div class="flex justify-between items-start mb-12">
+<span class="font-label text-xs uppercase tracking-widest bg-primary text-white px-3 py-1 rounded">The Sovereign</span>
+<span class="material-symbols-outlined text-secondary" data-icon="hub">hub</span>
+</div>
+<h3 class="font-headline text-5xl mb-6">Alexandria Prime 1.8T</h3>
+<p class="font-body text-lg text-on-surface-variant max-w-md leading-relaxed">
+                            Our premier frontier model. Designed for complex multi-step reasoning and deep creative synthesis across 40+ languages.
+                        </p>
+</div>
+<div class="flex items-center space-x-12 mt-8">
+<div>
+<div class="font-headline text-xl">1.8 Trillion</div>
+<div class="font-label text-[10px] uppercase tracking-tighter text-secondary">Total Parameters</div>
+</div>
+<div>
+<div class="font-headline text-xl">FP8/INT4</div>
+<div class="font-label text-[10px] uppercase tracking-tighter text-secondary">Quantization Ready</div>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-low rounded-xl p-8 flex flex-col">
+<div class="mb-auto">
+<span class="font-label text-xs uppercase tracking-widest border border-outline-variant px-3 py-1 rounded mb-6 inline-block">The Courier</span>
+<h3 class="font-headline text-3xl mb-4">Alexandria Nano</h3>
+<p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                            Low-latency, on-device intelligence. Optimized for mobile silicon and edge computing.
+                        </p>
+</div>
+<div class="mt-8 pt-8 border-t border-outline-variant/30">
+<div class="font-headline text-4xl mb-1">7B</div>
+<div class="font-label text-xs uppercase tracking-widest text-secondary">Parameters</div>
+<button class="mt-8 w-full py-3 font-label text-xs uppercase tracking-widest text-primary border border-primary/20 hover:bg-primary/5 transition-colors">Technical Specs</button>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-dim rounded-xl p-8 flex flex-col justify-between">
+<div>
+<span class="material-symbols-outlined text-tertiary mb-6" data-icon="biotech">biotech</span>
+<h3 class="font-headline text-3xl mb-4">Neural Helix</h3>
+<p class="font-body text-sm text-on-surface-variant">
+                            A specialized geometry model for protein folding and molecular dynamics.
+                        </p>
+</div>
+<div class="mt-8">
+<div class="flex -space-x-2 mb-4">
+<div class="w-8 h-8 rounded-full border-2 border-surface-dim overflow-hidden">
+<img data-alt="microscopic view of protein structures in soft purple and blue lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAucjJUMKzTstuHRqxLTh_b8AzAXuhO8oODkjTLbzjjlB9eZusU6FL5L4hbAycMl4f3DJjWEgzdPEp345ZzjRFadFHcn2efRxpsYEwnvtKNtDyG30dYmf29Poa6KmFxgLzu9J5ThzcvoLXKfQMSAfixCqjfQuxQ8qxJmc6eEMQooVPiwdK25DbcXa1jXaDNWZTorESLOGJ1ZwQS6rF_X95P1jX-b2_XzPz4IAWGD3wD6G5PLQqTRR6m73KxAolNUCQBVJeTj4Z49kxt"/>
+</div>
+<div class="w-8 h-8 rounded-full border-2 border-surface-dim overflow-hidden bg-primary-container flex items-center justify-center text-[10px] text-white">
+                                +12
+                            </div>
+</div>
+<div class="font-label text-xs text-on-surface-variant">Used by 12 Global Research Labs</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="md:col-span-2 relative rounded-xl overflow-hidden group">
+<img class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" data-alt="dramatic wide shot of a high-tech clean room server hall with blue ambient lighting and minimalist architecture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAD_ePL0WvOocs-X6iPGDN4EcxJ9poxwp4N4sQU0qWn1_vb_iHRKKZk1zHy21TobKTSsrH21b5dHh-M3FUpprv8Zm6ClAVm-hz_wjGUcNdhwI9lhbvzyMEBGjnnUlsoZZVuRGJW531ZLByIf-LaL-JxkDnVo2xa2amRpujlvN6R3MJMZa6muWk6M1O4-AFZbe9SccgmYiLWnBbrBCi3TwMdkrO5wRAIAqWgFF8dgzugQxye7OCKs3Q5wHb3Z7PubvMTbY4TXJylOyrr"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+<div class="relative h-full p-8 flex flex-col justify-end">
+<h3 class="font-headline text-3xl text-white mb-2">Inference Infrastructure</h3>
+<p class="font-body text-white/80 text-sm max-w-sm mb-6">Explore the global H100 clusters powering our flagship architectures.</p>
+<a class="font-label text-xs uppercase tracking-widest text-white flex items-center space-x-2 group/link" href="#">
+<span>Read Whitepaper</span>
+<span class="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</div>
+</section>
+<!-- Neural Geometries: Geometric Insights -->
+<section class="max-w-7xl mx-auto px-8 mb-32">
+<div class="border-t border-outline-variant/20 pt-16 grid grid-cols-1 lg:grid-cols-12 gap-16">
+<div class="lg:col-span-4">
+<h2 class="font-headline text-4xl mb-6">Neural Geometries</h2>
+<p class="font-body text-on-surface-variant leading-relaxed">
+                        Beyond weights and biases, we analyze the manifold structure of hidden representations. Our research indicates that higher-order intelligence correlates directly with the preservation of topological invariants during transformation.
+                    </p>
+</div>
+<div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="p-6 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="shape_line">shape_line</span>
+<h4 class="font-headline text-xl mb-2">Manifold Stability</h4>
+<p class="font-body text-sm text-on-surface-variant">Ensuring semantic consistency across extreme context lengths via persistent homology mapping.</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="filter_vintage">filter_vintage</span>
+<h4 class="font-headline text-xl mb-2">Sparse Activation Patterns</h4>
+<p class="font-body text-sm text-on-surface-variant">Visualizing the fractal nature of expert routing in 1.8T parameter spaces.</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="grain">grain</span>
+<h4 class="font-headline text-xl mb-2">Latent Space Curvature</h4>
+<p class="font-body text-sm text-on-surface-variant">Measuring the Ricci flow of information through deep transformer blocks.</p>
+</div>
+<div class="p-6 bg-surface-container-low rounded-lg">
+<span class="material-symbols-outlined text-primary mb-4" data-icon="polyline">polyline</span>
+<h4 class="font-headline text-xl mb-2">Vector Quantization</h4>
+<p class="font-body text-sm text-on-surface-variant">Discrete representation techniques for lossless compression of high-fidelity world models.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200/15 dark:border-slate-800/15 bg-slate-50 dark:bg-slate-950">
+<div class="max-w-7xl mx-auto px-8 py-12 flex flex-col md:flex-row justify-between items-center">
+<div class="font-serif font-semibold text-slate-900 dark:text-slate-50 mb-6 md:mb-0">ALEXANDRIA EDITORIAL</div>
+<div class="flex space-x-8 mb-6 md:mb-0">
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:underline decoration-[#6d5e00]" href="#">Privacy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:underline decoration-[#6d5e00]" href="#">Terms</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:underline decoration-[#6d5e00]" href="#">Archive</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:underline decoration-[#6d5e00]" href="#">Sitemap</a>
+</div>
+<div class="font-sans text-xs uppercase tracking-widest text-slate-500 opacity-80">
+                © 2024 Alexandria Editorial. All rights reserved.
+            </div>
+</div>
+</footer>
+</body></html>
