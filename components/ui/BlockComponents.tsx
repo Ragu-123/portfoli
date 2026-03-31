@@ -14,19 +14,19 @@ export const BlockButton: React.FC<VoxelButtonProps> = ({
   target
 }) => {
   
-  const baseStyles = "relative font-body font-semibold uppercase tracking-wider transition-all duration-300 ease-in-out hover:-translate-y-1 inline-flex items-center justify-center cursor-pointer select-none rounded-lg border shadow-sm";
+  const baseStyles = "relative font-label font-semibold transition-all duration-300 ease-in-out inline-flex items-center justify-center cursor-pointer select-none rounded-lg";
   
   const sizeStyles = {
-    sm: "px-4 py-2 text-xs",
-    md: "px-6 py-3 text-sm",
-    lg: "px-8 py-4 text-base",
+    sm: "px-4 py-2 text-sm",
+    md: "px-6 py-3 text-base",
+    lg: "px-8 py-4 text-lg",
   };
 
   const variantStyles = {
-    primary: "bg-primary text-on-primary border-primary hover:bg-opacity-90",
-    secondary: "bg-surface text-primary border-outline hover:border-primary",
-    accent: "bg-secondary text-on-primary border-secondary hover:bg-opacity-90",
-    danger: "bg-red-700 text-white border-red-800 hover:bg-red-800",
+    primary: "bg-primary text-on-primary hover:bg-primary-container hover:text-on-primary-container",
+    secondary: "bg-surface-container-high text-primary hover:bg-surface-dim",
+    accent: "bg-secondary text-on-secondary hover:bg-secondary-container hover:text-on-secondary-container",
+    danger: "bg-error text-on-error hover:bg-error-container hover:text-on-error-container",
   };
 
   const combinedClasses = `${baseStyles} ${sizeStyles[size]} ${variantStyles[variant]} ${className}`;
@@ -50,10 +50,10 @@ export const BlockButton: React.FC<VoxelButtonProps> = ({
 
 export const BlockCard: React.FC<VoxelCardProps> = ({ children, className = '', title, onClick }) => {
   return (
-    <TiltCard onClick={onClick} className={`relative bg-surface border border-outline rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300 p-0 h-full ${className}`}>
+    <TiltCard onClick={onClick} className={`relative bg-surface border border-outline-variant rounded-xl p-0 h-full ${className}`}>
       {title && (
-        <div className="bg-surface-container border-b border-outline p-4 rounded-t-xl">
-          <h3 className="font-headline font-semibold text-primary tracking-wide text-lg truncate">{title}</h3>
+        <div className="bg-surface-container border-b border-outline-variant p-4 rounded-t-xl">
+          <h3 className="font-headline font-semibold text-on-surface text-xl truncate">{title}</h3>
         </div>
       )}
       <div className="p-6 h-full flex flex-col">
@@ -67,7 +67,7 @@ export const BlockInput: React.FC<React.InputHTMLAttributes<HTMLInputElement>> =
   return (
     <input 
       {...props}
-      className={`w-full bg-surface-container border border-outline rounded-lg p-3 text-on-background shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-gray-500 font-body ${props.className}`}
+      className={`w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-on-surface-variant font-body ${props.className}`}
     />
   );
 };
@@ -76,7 +76,7 @@ export const BlockTextArea: React.FC<React.TextareaHTMLAttributes<HTMLTextAreaEl
   return (
     <textarea 
       {...props}
-      className={`w-full bg-surface-container border border-outline rounded-lg p-3 text-on-background shadow-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-gray-500 font-body ${props.className}`}
+      className={`w-full bg-surface-container-lowest border border-outline-variant rounded-lg p-3 text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all placeholder-on-surface-variant font-body ${props.className}`}
     />
   );
 };
@@ -92,12 +92,12 @@ export const BlockModal = ({ isOpen, onClose, children, title }: BlockModalProps
     if (!isOpen) return null;
   
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-inverse-surface/40 backdrop-blur-sm animate-in fade-in duration-200">
         <div className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto rounded-xl shadow-2xl">
-          <div className="bg-surface border border-outline rounded-xl">
-             <div className="bg-surface-container border-b border-outline p-4 flex items-center justify-between sticky top-0 z-10 rounded-t-xl">
-                <h3 className="font-headline font-semibold text-primary tracking-wide text-xl">{title || "Details"}</h3>
-                <button onClick={onClose} className="hover:bg-outline/30 p-1 rounded-full transition-colors text-secondary">
+          <div className="bg-surface border border-outline-variant rounded-xl">
+             <div className="bg-surface-container-low border-b border-outline-variant p-4 flex items-center justify-between sticky top-0 z-10 rounded-t-xl">
+                <h3 className="font-headline font-semibold text-on-surface text-2xl">{title || "Details"}</h3>
+                <button onClick={onClose} className="hover:bg-outline-variant/30 p-1 rounded-full transition-colors text-on-surface-variant">
                   <X className="w-6 h-6" />
                 </button>
              </div>
@@ -113,11 +113,11 @@ export const BlockModal = ({ isOpen, onClose, children, title }: BlockModalProps
 export const BlockProgressBar: React.FC<{ label: string; progress: number }> = ({ label, progress }) => {
   return (
     <div className="mb-3">
-      <div className="flex justify-between text-sm font-semibold text-secondary mb-2 font-body">
+      <div className="flex justify-between text-sm font-semibold text-on-surface-variant mb-2 font-label">
         <span>{label}</span>
         <span>{progress}%</span>
       </div>
-      <div className="h-2 bg-surface-container rounded-full overflow-hidden border border-outline/50">
+      <div className="h-2 bg-surface-container rounded-full overflow-hidden border border-outline-variant/50">
         <div 
           className="h-full bg-primary relative transition-all duration-1000 ease-out"
           style={{ width: `${progress}%` }}
