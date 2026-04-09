@@ -1,0 +1,26 @@
+
+> ragunath-r---ai-engineer-portfolio@0.0.0 dev
+> vite
+
+
+  VITE v6.4.1  ready in 460 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://192.168.0.2:3000/
+3:45:17 AM [vite] (client) page reload index.html
+3:45:58 AM [vite] (client) hmr update /components/ui/BlockComponents.tsx
+3:46:32 AM [vite] (client) hmr update /components/ui/Animations.tsx
+3:46:33 AM [vite] (client) hmr update /components/ui/Animations.tsx
+3:46:35 AM [vite] (client) hmr update /components/ui/Animations.tsx
+3:48:17 AM [vite] (client) hmr update /App.tsx
+4:08:39 AM [vite] (client) page reload hero_stitch.html
+4:09:06 AM [vite] (client) page reload hero_stitch.html
+4:09:24 AM [vite] (client) page reload about_stitch.html
+4:09:46 AM [vite] (client) page reload projects_stitch.html
+4:10:13 AM [vite] (client) page reload projects_stitch.html
+4:10:32 AM [vite] (client) page reload projects_stitch.html
+4:10:46 AM [vite] (client) page reload projects_stitch.html
+4:11:16 AM [vite] (client) page reload projects_stitch.html
+4:11:29 AM [vite] (client) page reload projects_stitch.html
+4:12:03 AM [vite] (client) page reload contact_stitch.html
+4:17:55 AM [vite] (client) hmr update /App.tsx

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Correspondence | Alexandria</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@300;400;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "outline-variant": "#c3c6d5",
+              "on-secondary-fixed-variant": "#42474b",
+              "on-secondary-container": "#606569",
+              "surface-container": "#efedee",
+              "on-secondary-fixed": "#171c20",
+              "on-primary": "#ffffff",
+              "on-secondary": "#ffffff",
+              "on-primary-fixed": "#001946",
+              "surface-tint": "#2259bf",
+              "secondary-container": "#dfe3e8",
+              "error": "#ba1a1a",
+              "primary-fixed": "#d9e2ff",
+              "on-primary-fixed-variant": "#00419d",
+              "on-surface-variant": "#434653",
+              "surface-container-high": "#e9e8e9",
+              "tertiary-fixed": "#f9e37a",
+              "surface-container-lowest": "#ffffff",
+              "inverse-on-surface": "#f2f0f1",
+              "surface": "#faf9fa",
+              "on-background": "#1b1c1d",
+              "background": "#faf9fa",
+              "tertiary": "#6d5e00",
+              "on-error": "#ffffff",
+              "inverse-surface": "#303031",
+              "on-surface": "#1b1c1d",
+              "on-primary-container": "#e7ebff",
+              "error-container": "#ffdad6",
+              "surface-variant": "#e3e2e3",
+              "surface-container-highest": "#e3e2e3",
+              "tertiary-container": "#bfab49",
+              "secondary-fixed": "#dfe3e8",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#dcc661",
+              "surface-bright": "#faf9fa",
+              "secondary": "#5a5f63",
+              "on-tertiary-container": "#4a3f00",
+              "surface-dim": "#dbdadb",
+              "surface-container-low": "#f5f3f4",
+              "on-tertiary-fixed-variant": "#524600",
+              "primary-container": "#3366cc",
+              "outline": "#737784",
+              "primary-fixed-dim": "#b1c5ff",
+              "on-tertiary-fixed": "#211b00",
+              "secondary-fixed-dim": "#c2c7cc",
+              "inverse-primary": "#b1c5ff",
+              "primary": "#094cb2",
+              "on-error-container": "#93000a"
+            },
+            fontFamily: {
+              "headline": ["Noto Serif"],
+              "body": ["Inter"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Noto Serif', serif; }
+        .label-text { font-family: 'Public Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen selection:bg-primary-fixed selection:text-on-primary-fixed">
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-8 py-4 max-w-7xl mx-auto">
+<div class="font-serif text-2xl font-bold italic text-slate-900 dark:text-slate-50">Alexandria</div>
+<div class="hidden md:flex space-x-8 items-center">
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 transition-colors" href="#">Architectures</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 transition-colors" href="#">Datasets</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 transition-colors" href="#">Research</a>
+<a class="font-serif text-lg tracking-tight text-slate-600 dark:text-slate-400 hover:text-blue-700 dark:hover:text-blue-400 transition-colors" href="#">About</a>
+<a class="font-serif text-lg tracking-tight text-blue-700 dark:text-blue-400 border-b-2 border-blue-700 dark:border-blue-400 pb-1" href="#">Contact</a>
+</div>
+<button class="md:hidden p-2 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="menu">menu</span>
+</button>
+</div>
+</nav>
+<main class="pt-32 pb-24 px-6 max-w-5xl mx-auto">
+<!-- Hero Section -->
+<header class="mb-20 text-center md:text-left max-w-2xl">
+<span class="label-text text-xs uppercase tracking-[0.2em] text-tertiary font-semibold mb-4 block">Formal Inquiry</span>
+<h1 class="text-5xl md:text-6xl font-headline text-on-surface leading-tight mb-6">Correspondence</h1>
+<p class="text-lg md:text-xl text-on-surface-variant leading-relaxed font-body">
+                Engagement in collaborative research and high-level technical consultation. Please direct your professional inquiries regarding architectural breakthroughs or dataset curation through the formal channels below.
+            </p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
+<!-- Left Column: Formal Contact Form -->
+<section class="lg:col-span-7 bg-surface-container-lowest p-8 md:p-12 shadow-sm rounded-lg">
+<h2 class="text-2xl font-headline mb-8 text-on-surface">Professional Inquiry</h2>
+<form action="#" class="space-y-8">
+<div class="space-y-2 group">
+<label class="label-text text-xs uppercase tracking-widest text-on-surface-variant group-focus-within:text-primary transition-colors" for="name">Full Name</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 font-headline text-lg placeholder:text-surface-dim transition-all" id="name" name="name" placeholder="Dr. Julian Thorne" type="text"/>
+</div>
+<div class="space-y-2 group">
+<label class="label-text text-xs uppercase tracking-widest text-on-surface-variant group-focus-within:text-primary transition-colors" for="email">Institutional Email</label>
+<input class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 font-headline text-lg placeholder:text-surface-dim transition-all" id="email" name="email" placeholder="j.thorne@university.edu" type="email"/>
+</div>
+<div class="space-y-2 group">
+<label class="label-text text-xs uppercase tracking-widest text-on-surface-variant group-focus-within:text-primary transition-colors" for="subject">Nature of Inquiry</label>
+<select class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 font-headline text-lg text-on-surface-variant transition-all cursor-pointer" id="subject" name="subject">
+<option value="research">Collaborative Research</option>
+<option value="consultancy">Technical Consultation</option>
+<option value="speaking">Speaking Engagement</option>
+<option value="other">General Protocol</option>
+</select>
+</div>
+<div class="space-y-2 group">
+<label class="label-text text-xs uppercase tracking-widest text-on-surface-variant group-focus-within:text-primary transition-colors" for="message">Detail of Request</label>
+<textarea class="w-full bg-transparent border-0 border-b border-outline-variant focus:ring-0 focus:border-primary py-3 px-0 font-headline text-lg placeholder:text-surface-dim transition-all resize-none" id="message" name="message" placeholder="Briefly outline the parameters of your inquiry..." rows="4"></textarea>
+</div>
+<div class="pt-6">
+<button class="group flex items-center gap-3 bg-gradient-to-r from-primary to-primary-container text-on-primary px-8 py-4 rounded-full font-label font-semibold tracking-wider hover:opacity-90 active:scale-95 transition-all" type="submit">
+<span>DISPATCH PROTOCOL</span>
+<span class="material-symbols-outlined text-sm" data-icon="send">send</span>
+</button>
+</div>
+</form>
+</section>
+<!-- Right Column: Secondary Information & Channels -->
+<aside class="lg:col-span-5 space-y-12">
+<!-- Direct Channels -->
+<div class="space-y-6">
+<h3 class="text-xs uppercase tracking-[0.3em] text-on-surface-variant font-label font-bold">Direct Channels</h3>
+<div class="grid grid-cols-1 gap-4">
+<a class="flex items-center justify-between p-6 bg-surface-container-low hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="fingerprint">fingerprint</span>
+<div>
+<p class="label-text text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Author Identifier</p>
+<p class="font-headline text-lg text-on-surface">ORCID ID</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between p-6 bg-surface-container-low hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="library_books">library_books</span>
+<div>
+<p class="label-text text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Preprint Archives</p>
+<p class="font-headline text-lg text-on-surface">arXiv.org</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between p-6 bg-surface-container-low hover:bg-surface-container transition-all group" href="#">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary" data-icon="terminal">terminal</span>
+<div>
+<p class="label-text text-[10px] uppercase tracking-widest text-on-surface-variant mb-1">Version Control</p>
+<p class="font-headline text-lg text-on-surface">GitHub</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-outline group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Office Hours / Location -->
+<div class="p-8 bg-tertiary-container/10 border-l-4 border-tertiary">
+<h3 class="text-xs uppercase tracking-[0.3em] text-tertiary font-label font-bold mb-4">Availability</h3>
+<p class="font-headline text-on-tertiary-container mb-4 italic leading-relaxed">
+                        Currently reviewing proposals for the upcoming academic cycle. Response times may vary based on laboratory commitments.
+                    </p>
+<div class="flex items-center gap-2 text-on-tertiary-container opacity-70">
+<span class="material-symbols-outlined text-sm" data-icon="location_on">location_on</span>
+<span class="label-text text-xs tracking-wider">Cambridge, MA · EST</span>
+</div>
+</div>
+<!-- Subtle Decorative Image -->
+<div class="relative h-64 overflow-hidden rounded-lg grayscale hover:grayscale-0 transition-all duration-700">
+<img alt="Academic Workspace" class="object-cover w-full h-full opacity-60" data-alt="close-up of a minimalist wooden desk with an open leather journal, fountain pen, and soft morning sunlight through window" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA-pwmpQbJcZyLwv67LmQUoCP6FePFenTzAVwV0TomOi_DvepbXAKC422FF9i5-x8IvkOoHdu3WeLzmnXDWymqhRcDHlRM55oPxHSsnaljffEPCHlUMCf_B7bynGF5P8TYz2bn5IAcy69efMGv9H7FjAQqhtNLMMbt1QHGgy1MKyElwGT2_lMJWagrKscyX9hb29d-ICDDMHm_OE0CY_473DCnQqoqiwC-CxAFZX4qvDvuU4r6soIu-R4zw98FAgV_R7mfkEW2_E-gA"/>
+<div class="absolute inset-0 bg-primary/5 mix-blend-multiply"></div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+<div class="flex flex-col md:flex-row justify-between items-center px-8 py-12 max-w-7xl mx-auto">
+<div class="mb-8 md:mb-0">
+<div class="font-serif text-xl font-bold text-slate-900 dark:text-slate-50 mb-2">Alexandria</div>
+<p class="font-sans text-xs uppercase tracking-widest text-slate-500 dark:text-slate-500">
+                    © 2024 Alexandria Editorial. All rights reserved. Built for the scholarly web.
+                </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" href="#">Privacy</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" href="#">Terms</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" href="#">RSS Feed</a>
+<a class="font-sans text-xs uppercase tracking-widest text-slate-500 hover:text-blue-700 dark:hover:text-blue-300 transition-colors" href="#">GitHub</a>
+</div>
+</div>
+</footer>
+</body></html>

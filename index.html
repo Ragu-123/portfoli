@@ -3,29 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VoxelFolio - 3D Portfolio</title>
+    <title>Alexandria | AI Developer Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600&family=Public+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
       body {
-        font-family: 'Space Mono', monospace;
-        background-color: #1a1b26;
-        color: #fff;
+        font-family: 'Inter', sans-serif;
+        background-color: #faf9fa;
+        color: #1b1c1d;
         overflow-x: hidden;
       }
-      /* Custom Scrollbar */
+      h1, h2, h3, h4, .font-headline {
+        font-family: 'Noto Serif', serif;
+      }
+      /* Custom Scrollbar - Minimalist */
       ::-webkit-scrollbar {
-        width: 12px;
+        width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #1a1b26;
+        background: transparent;
       }
       ::-webkit-scrollbar-thumb {
-        background: #7aa2f7;
-        border: 2px solid #1a1b26;
+        background: #c3c6d5;
+        border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #bb9af7;
+        background: #737784;
       }
     </style>
     <script>
@@ -33,25 +36,66 @@
         theme: {
           extend: {
             colors: {
-              voxel: {
-                bg: '#1a1b26',
-                card: '#24283b',
-                primary: '#7aa2f7',
-                secondary: '#bb9af7',
-                accent: '#9ece6a',
-                danger: '#f7768e',
-                dark: '#0f0f14'
-              }
+              "secondary-fixed": "#dfe3e8",
+              "on-primary-container": "#e7ebff",
+              "on-surface": "#1b1c1d",
+              "surface-tint": "#2259bf",
+              "on-secondary-fixed": "#171c20",
+              "error": "#ba1a1a",
+              "on-secondary": "#ffffff",
+              "surface-container-high": "#e9e8e9",
+              "background": "#faf9fa",
+              "inverse-surface": "#303031",
+              "secondary-fixed-dim": "#c2c7cc",
+              "on-error": "#ffffff",
+              "secondary-container": "#dfe3e8",
+              "primary-container": "#3366cc",
+              "on-secondary-container": "#606569",
+              "surface-bright": "#faf9fa",
+              "outline-variant": "#c3c6d5",
+              "surface-container-highest": "#e3e2e3",
+              "on-tertiary-container": "#4a3f00",
+              "on-primary-fixed-variant": "#00419d",
+              "tertiary-fixed-dim": "#dcc661",
+              "on-error-container": "#93000a",
+              "tertiary-fixed": "#f9e37a",
+              "error-container": "#ffdad6",
+              "surface": "#faf9fa",
+              "on-tertiary": "#ffffff",
+              "primary": "#094cb2",
+              "tertiary": "#6d5e00",
+              "tertiary-container": "#bfab49",
+              "on-tertiary-fixed-variant": "#524600",
+              "on-primary-fixed": "#001946",
+              "on-tertiary-fixed": "#211b00",
+              "surface-container-lowest": "#ffffff",
+              "surface-container": "#efedee",
+              "inverse-primary": "#b1c5ff",
+              "surface-variant": "#e3e2e3",
+              "primary-fixed-dim": "#b1c5ff",
+              "surface-container-low": "#f5f3f4",
+              "on-secondary-fixed-variant": "#42474b",
+              "inverse-on-surface": "#f2f0f1",
+              "surface-dim": "#dbdadb",
+              "primary-fixed": "#d9e2ff",
+              "outline": "#737784",
+              "secondary": "#5a5f63",
+              "on-surface-variant": "#434653"
             },
             fontFamily: {
-              mono: ['Space Mono', 'monospace'],
-              pixel: ['VT323', 'monospace'],
+              headline: ["Noto Serif", "serif"],
+              body: ["Inter", "sans-serif"],
+              label: ["Public Sans", "sans-serif"]
+            },
+            borderRadius: {
+              DEFAULT: "0.125rem",
+              lg: "0.25rem",
+              xl: "0.5rem",
+              full: "0.75rem"
             },
             boxShadow: {
-              'voxel-sm': '2px 2px 0px 0px rgba(0,0,0,0.5)',
-              'voxel': '4px 4px 0px 0px rgba(0,0,0,0.5)',
-              'voxel-lg': '8px 8px 0px 0px rgba(0,0,0,0.5)',
-              'voxel-xl': '12px 12px 0px 0px rgba(0,0,0,0.5)',
+              'sm': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+              'DEFAULT': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
             }
           }
         }
